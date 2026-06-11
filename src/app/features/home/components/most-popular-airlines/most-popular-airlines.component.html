@@ -1,0 +1,11 @@
+<p class="title text-center">{{ 'home.popularAirlines' | translate }}</p>
+
+<swiper-container #swiperEl class="mx-4" autoplay='{"delay": 3000, "disableOnInteraction": false}'>
+  @for (airline of popularAirlines; track airline) {
+    <swiper-slide class="d-flex justify-content-center">
+      <div class="airline-wrapper">
+        <img [src]="airline" />
+      </div>
+    </swiper-slide>
+  }
+</swiper-container>

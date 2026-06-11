@@ -1,0 +1,48 @@
+@import 'variables';
+@import 'colors';
+
+.path {
+  display: flex;
+  align-items: center;
+
+  &__circle {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+
+    background-color: map-get($map: $blue, $key: 'one');
+  }
+
+  &__dashed-line {
+    flex-grow: 1;
+    height: 0;
+    border-top: 1px dashed map-get($map: $blue, $key: 'one');
+  }
+
+  &__info {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    font-weight: 400;
+
+    &__duration {
+      padding: 4px 4px;
+
+      background-color: map-get($map: $blue, $key: 'two');
+      border-radius: 12px;
+
+      color: white;
+      white-space: nowrap;
+      font-size: 0.9rem;
+    }
+
+    &__direct {
+      position: absolute;
+      top: 30px;
+      color: map-get($map: $blue, $key: 'one');
+          font-size: 12px;
+    }
+  }
+}

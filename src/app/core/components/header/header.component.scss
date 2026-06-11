@@ -1,0 +1,135 @@
+@import 'utilities';
+
+header {
+  padding: 24px 100px;
+  background-color: map-get($map: $blue, $key: 'one');
+
+  @media (min-width: $web-view-break-point) {
+    background-color: transparent;
+    z-index: 2;
+    width: 100%;
+
+    transition: all 0.2s;
+
+    &.dark-bg {
+      background-color: rgba(0, 0, 0, 0.75);
+    }
+
+    &.white-bg {
+      background-color: white;
+    }
+
+    &.shadow {
+      box-shadow: 1px 1px 12px 0px #0000001f !important;
+      margin-bottom: 5px;
+    }
+  }
+}
+
+.actions {
+  img {
+    @include button-animation();
+  }
+}
+
+.logo {
+  cursor: pointer;
+}
+
+.header-button,
+.lang,
+.currency {
+  cursor: pointer;
+  font-family: Open Sans;
+  font-weight: 700;
+
+  color: white;
+  background: transparent;
+  border: none;
+  border-radius: 50px;
+  transition: all 0.3s;
+}
+
+.header-button {
+  border: 1px solid rgba(255, 255, 255, 1);
+  padding-inline: 40px;
+  padding-block: 10px;
+  border-radius: 50px;
+  &:hover {
+    background: #d4dedf80;
+  }
+}
+
+.header-black {
+  color: black;
+}
+
+.lang {
+  text-transform: uppercase;
+  padding: 10px;
+}
+
+.currency {
+  font-size: 14px;
+
+  padding: 10px;
+
+  img:last-child {
+    margin-inline-start: 5px;
+    object-fit: cover;
+    object-position: center;
+    height: 25px;
+    width: 40px;
+  }
+
+  p {
+    width: 30px;
+    margin: 0;
+  }
+}
+
+.web-actions {
+  gap: 1.2vw;
+}
+
+.rounded-radius-right {
+  border-radius: 50px 0 0 50px;
+}
+
+.rounded-radius-left {
+  border-radius: 0 50px 50px 0;
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+  transition: all 0.2s;
+
+  &:hover {
+    color: map-get($map: $blue, $key: 'main');
+  }
+}
+
+.force-ltr {
+  direction: ltr;
+  unicode-bidi: bidi-override;
+}
+
+.vertical-divider {
+  border-left: 2px solid #ccc;
+  height: 37px;
+  margin: 0 10px;
+}
+
+.blue-color {
+  color: map-get($map: $blue, $key: 'one');
+}
+
+.blue-border {
+  border-color: map-get($map: $blue, $key: 'one');
+}
+
+.flags {
+  width: 42px;
+  max-height: 26px;
+}

@@ -1,0 +1,24 @@
+@import 'colors';
+
+.slider {
+  width: 95%;
+
+  ::ng-deep {
+    --mdc-slider-active-track-color: #{map-get($blue, 'one')};
+    --mdc-slider-handle-color: #{map-get($blue, 'one')};
+    --mdc-slider-hover-handle-color: #{map-get($blue, 'one')};
+    --mdc-slider-focus-handle-color: #{map-get($blue, 'one')};
+    --mat-mdc-slider-ripple-color: #{map-get($blue, 'one')};
+  }
+}
+
+.prices {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+
+  &__min,
+  &__max {
+    flex-grow: 1;
+  }
+}

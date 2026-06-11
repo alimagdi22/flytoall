@@ -1,0 +1,37 @@
+<div class="steps">
+  <p class="activated">
+    @if (sharedService.screenWidth >= sharedService.webViewBreakPoint) {
+      {{ 'checkout.contactDetails.contactDetails' | translate }}
+    } @else {
+      {{ 'checkout.contactDetails.contactDetailsMobile' | translate }}
+    }
+  </p>
+  <img
+    src="assets/icons/right-arrow-green-icon.svg"
+    [class.flip-icon]="translateService.currentLang === 'ar'"
+    title="Arrow"
+  />
+  <p
+    [ngClass]="{
+      activated: sharedService.checkoutSteps >= 1,
+    }"
+  >
+    @if (sharedService.screenWidth >= sharedService.webViewBreakPoint) {
+      {{ 'checkout.travellersDetails.passengerDetails' | translate }}
+    } @else {
+      {{ 'checkout.travellersDetails.passengerDetailsMobile' | translate }}
+    }
+  </p>
+  <img
+    [src]="'assets/icons/right-arrow-' + (sharedService.checkoutSteps >= 1 ? 'green-icon.svg' : 'gray-icon.svg')"
+    title="Arrow"
+    [class.flip-icon]="translateService.currentLang === 'ar'"
+  />
+  <p
+    [ngClass]="{
+      activated: sharedService.checkoutSteps >= 2,
+    }"
+  >
+    {{ 'checkout.payment.payment' | translate }}
+  </p>
+</div>

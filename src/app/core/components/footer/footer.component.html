@@ -1,0 +1,163 @@
+@if (sharedService.screenWidth <= sharedService.webViewBreakPoint) {
+  <footer class="footer mt-5">
+    <div class="footer-container">
+      <div class="d-flex align-items-center gap-3">
+        <img class="logo" src="assets/images/logo.png" />
+
+        <p class="text-start mb-0" [class.text-end]="translate.currentLang === 'ar'">
+          {{ 'footer.description' | translate }}
+        </p>
+      </div>
+
+      <div class="footer-links d-flex justify-content-between w-100">
+        <div class="column d-flex flex-column flex-lg-row gap-4 align-items-start w-50">
+          <a routerLink="/">{{ 'footer.home' | translate }}</a>
+          <a routerLink="/about-us">{{ 'footer.aboutUs' | translate }}</a>
+          <!-- <a href="#">{{ 'footer.application' | translate }}</a> -->
+          <a routerLink="/contact-us">{{ 'footer.contactUs' | translate }}</a>
+        </div>
+
+        <div class="column d-flex flex-column flex-lg-row gap-4 align-items-start w-50">
+          <a routerLink="/privacy-policy">{{ 'footer.privacyPolicy' | translate }}</a>
+          <a routerLink="/terms">{{ 'footer.terms' | translate }}</a>
+
+          <div class="footer-socials d-flex gap-2 justify-content-center">
+            <a>
+              <img src="assets/icons/footer/facebook.svg" width="20px" />
+            </a>
+            <a>
+              <img src="assets/icons/footer/linkedin.svg" width="20px" />
+            </a>
+            <a>
+              <img src="assets/icons/footer/instagram.svg" width="20px" />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-contact d-flex flex-wrap justify-content-between w-100">
+        <div class="d-flex flex-column flex-lg-row flex-grow-1 align-items-start gap-2 w-50">
+          <a class="text-white d-flex align-items-center gap-2" href="mailto:reservations@Maalem-Tours.com">
+            <img src="assets/icons/footer/mail.svg" width="20" /> {{ 'footer.email' | translate }}
+          </a>
+
+          <a class="text-white phone-number d-flex align-items-center gap-2" href="tel:+201211110310">
+            <img src="assets/icons/footer/phone.svg" width="20" alt="Phone Icon" />
+            <span class="force-ltr">+20 121 111 0310 ( support )</span>
+          </a>
+
+          <a class="text-white d-flex align-items-start gap-2" href="https://www.google.com/maps/place/114+El+Tahrir,+Ad+Dawawin,+Abdeen,+Cairo+Governorate+4280101/@30.0445329,31.2382364,17z/data=!3m1!4b1!4m5!3m4!1s0x145840c7be8618d1:0x88cbb7c3022c1029!8m2!3d30.0445329!4d31.2382364?entry=ttu&g_ep=EgoyMDI2MDMxNS4wIKXMDSoASAFQAw%3D%3D" target="_blank">
+            <img src="assets/icons/footer/location.svg" />
+            <p class="m-0" [style.text-align]="'start'">
+              Cairo branch address: 114 Tahrir Street, Cairo State of Egypt.
+            </p>
+          </a>
+          <a class="text-white d-flex align-items-start gap-2" href="https://www.google.com/maps/search/4+Al+Hagrasy+Street+opposite+the+Passport+Gate+Mansoura+State+of+Egypt/@31.0417751,31.350111,15z?entry=s&sa=X&ved=1t%3A199789" target="_blank">
+            <img src="assets/icons/footer/location.svg" />
+            <p class="m-0" [style.text-align]="'start'">
+              Mansoura branch address: 4 Al-Hagrasy Street, opposite the Passport Gate, Mansoura State of Egypt.
+            </p>
+          </a>
+        </div>
+
+        <!-- <div class="footer-certificates">
+          <img src="assets/images/footer/iata.png" alt="IATA" />
+          <img src="assets/images/footer/license.png" alt="IATA" />
+          <img src="assets/images/footer/tyran.png" alt="IATA" />
+        </div> -->
+      </div>
+    </div>
+
+    <div class="footer-bottom">{{ 'footer.rights' | translate }} © 2025 <span class="brand-blue">flytoall</span></div>
+  </footer>
+} @else {
+  <div class="footer-desktop">
+    <div class="head mb-2">
+      <div class="logo-section">
+        <img class="logo" src="assets/images/logo.png" width="200" />
+        <p class="logo-text" [class.text-end]="translate.currentLang === 'ar'">
+          {{ 'footer.description' | translate }}
+        </p>
+      </div>
+
+      <div class="data d-flex justify-content-center mt-5">
+        <div class="links">
+          <ul>
+            <li>
+              <a routerLink="" [ngStyle]="translate.currentLang === 'ar' ? { 'font-size': '17px' } : {}">{{
+                'footer.home' | translate
+              }}</a>
+            </li>
+            <li>
+              <a routerLink="/about-us" [ngStyle]="translate.currentLang === 'ar' ? { 'font-size': '17px' } : {}">{{
+                'footer.aboutUs' | translate
+              }}</a>
+            </li>
+            <!-- <li>
+              <a href="#" [ngStyle]="translate.currentLang === 'ar' ? {'font-size': '17px'} : {}">{{ 'footer.application' | translate }}</a>
+            </li> -->
+            <li>
+              <a routerLink="/contact-us" [ngStyle]="translate.currentLang === 'ar' ? { 'font-size': '17px' } : {}">{{
+                'footer.contactUs' | translate
+              }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="privacy mt-5">
+        <a routerLink="/terms">{{ 'footer.terms' | translate }}</a>
+        <a routerLink="/privacy-policy">{{ 'footer.privacyPolicy' | translate }}</a>
+        <!-- <a href="#">{{ 'footer.helpCenter' | translate }}</a> -->
+      </div>
+
+      <div class="contact mt-5">
+        <ul>
+          <li>
+            <a class="text-white d-flex align-items-center gap-2" href="mailto:reservations@Maalem-Tours.com">
+              <img src="assets/icons/footer/mail.svg" width="20" /> {{ 'footer.email' | translate }}
+            </a>
+          </li>
+          <li>
+            <a class="text-white d-flex align-items-center gap-2" href="tel:+201211110310">
+              <img src="assets/icons/footer/phone.svg" width="20" alt="Phone Icon" />
+              <span class="force-ltr">+20 121 111 0310</span>
+            </a>
+          </li>
+          <li>
+            <a class="text-white d-flex align-items-start gap-2" href="https://g.co/kgs/A7fLMkV" target="_blank">
+              <img src="assets/icons/footer/location.svg" />
+              <p class="m-0" [style.text-align]="'start'">
+                Cairo branch address: 114 Tahrir Street, Cairo State of Egypt.
+              </p>
+            </a>
+          </li>
+          <li>
+            <a class="text-white d-flex align-items-start gap-2" href="https://g.co/kgs/A7fLMkV" target="_blank">
+              <img src="assets/icons/footer/location.svg" />
+              <p class="m-0" [style.text-align]="'start'">
+                Mansoura branch address: 4 Al-Hagrasy Street, opposite the Passport Gate, Mansoura State of Egypt.
+              </p>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot d-flex justify-content-between mt-5">
+      <div class="footer-bottom mt-2">
+        {{ 'footer.rights' | translate }} © 2026 <span class="brand-blue text-white">flytoall</span>
+      </div>
+      <div class="d-flex gap-2 mt-2">
+        <a href="" target="_blank">
+          <img src="assets/icons/footer/facebook.svg" width="20px" />
+        </a>
+        <a href="" target="_blank">
+          <img src="assets/icons/footer/linkedin.svg" width="20px" />
+        </a>
+        <a href="" target="_blank">
+          <img src="assets/icons/footer/instagram.svg" width="20px" />
+        </a>
+      </div>
+    </div>
+  </div>
+}

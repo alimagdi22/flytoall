@@ -1,0 +1,31 @@
+@import 'variables';
+@import 'colors';
+
+.steps {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 20px 25px ;
+  color: map-get($map: $blue, $key: 'one');
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 12px;
+  margin-top: 50px;
+  margin-bottom: 55px;
+
+  p{
+    margin-bottom: 0 !important;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 25px 20px 10px ;
+  }
+}
+
+.activated {
+  color: map-get($map: $orange, $key: 'one');
+}
+

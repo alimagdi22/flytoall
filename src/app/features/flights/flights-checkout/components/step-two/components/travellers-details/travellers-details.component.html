@@ -1,0 +1,190 @@
+@if (isFormReady && passengerCount > 0) {
+  <mat-accordion #travellerPanel>
+    <mat-expansion-panel
+      *ngFor="let passenger of usersArray.controls; let i = index; trackBy: trackByFn"
+      [class.highlight-panel]="shouldHighlightPanel(i)"
+      [expanded]="i === currentExpandedIndex"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-description>
+          {{ 'checkout.travellersDetails.passenger' | translate }} {{ i + 1 }} ({{
+            getPassengerTypeLabel(getPassengerForm(i).get('PassengerType')?.value)
+          }})
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div class="expansion-content" [formGroup]="getPassengerForm(i)">
+        <div class="custom-radio-group gap-2">
+          <label
+            *ngFor="let option of genderOptions"
+            class="radio-btn"
+            [ngStyle]="{ borderColor: isFieldInvalid(i, 'title') ? 'red' : '' }"
+          >
+            <input type="radio" [value]="option" formControlName="title" />
+            {{ 'checkout.travellersDetails.' + (option === 'Mr' ? 'male' : 'female') | translate }}
+          </label>
+        </div>
+        <div class="d-flex flex-column gap-2">
+          <div class="d-flex gap-2 w-100">
+            <div class="d-flex flex-column gap-2 w-50">
+              <label>{{ 'checkout.travellersDetails.firstName' | translate }}</label>
+              <div class="custom-input-container" [ngStyle]="{ borderColor: isFieldInvalid(i, 'firstName') ? 'red' : '' }">
+                <input
+                  type="text"
+                  [placeholder]="'checkout.travellersDetails.firstName' | translate"
+                  formControlName="firstName"
+                />
+              </div>
+              @if (isFieldInvalid(i, 'firstName')) {
+                <p class="validation-msg visible">
+                  {{ getFieldError(i, 'firstName') }}
+                </p>
+              }
+            </div>  
+            <div class="d-flex flex-column gap-2 w-50">
+              <label>{{ 'checkout.travellersDetails.lastName' | translate }}</label>
+              <div class="custom-input-container" [ngStyle]="{ borderColor: isFieldInvalid(i, 'lastName') ? 'red' : '' }">
+                <input
+                  type="text"
+                  [placeholder]="'checkout.travellersDetails.lastName' | translate"
+                  formControlName="lastName"
+                />
+              </div>
+              @if (isFieldInvalid(i, 'lastName')) {
+                <p class="validation-msg visible">
+                  {{ getFieldError(i, 'lastName') }}
+                </p>
+              }
+            </div>
+          </div>
+          <div class="d-flex gap-2 w-100">
+
+            <div class="d-flex flex-column gap-2 w-50">
+              <label>{{ 'checkout.travellersDetails.birthday' | translate }}</label>
+              <div
+                class="custom-input-container"
+                [ngStyle]="{ borderColor: isFieldInvalid(i, 'dateOfBirth') ? 'red' : '' }"
+              >
+                <span class="input-icon">
+                  <img src="assets/icons/calander-input-icon.svg" alt="icon" />
+                </span>
+                <input
+                  class="form-control calendar-input"
+                  name="dp"
+                  ngbDatepicker
+                  container="body"
+                  #d="ngbDatepicker"
+                  [minDate]="minDates[i]"
+                  [maxDate]="maxDates[i]"
+                  formControlName="birthDate"
+                  [placeholder]="'checkout.travellersDetails.birthday' | translate"
+                  (click)="d.toggle()"
+                  readonly
+                />
+              </div>
+              @if (isFieldInvalid(i, 'dateOfBirth')) {
+                <p class="validation-msg visible">
+                  {{ getFieldError(i, 'dateOfBirth') }}
+                </p>
+              }
+            </div>
+  
+            <div class="d-flex flex-column gap-2 w-50">
+              <label>{{ 'checkout.travellersDetails.passport.passportNumber' | translate }}</label>
+              <div
+                class="custom-input-container"
+                [ngStyle]="{ borderColor: isFieldInvalid(i, 'PassportNumber') ? 'red' : '' }"
+              >
+                <input
+                  type="text"
+                  [placeholder]="'checkout.travellersDetails.passport.passportNumber' | translate"
+                  formControlName="PassportNumber"
+                />
+              </div>
+              @if (isFieldInvalid(i, 'PassportNumber')) {
+                <p class="validation-msg visible">
+                  {{ getFieldError(i, 'PassportNumber') }}
+                </p>
+              }
+            </div>
+          </div>
+
+          <div class="d-flex gap-2 w-100">
+
+            <div class="d-flex flex-column gap-2 w-50">
+              <label>{{ 'checkout.travellersDetails.passport.issuingCountry' | translate }}</label>
+              <div
+                class="custom-input-container"
+                [ngStyle]="{
+                  borderColor:
+                    isFieldInvalid(i, 'IssuedCountry') ||
+                    (!getPassengerForm(i).get('isIssuedCountrySelected')?.value &&
+                      getPassengerForm(i).get('countryName')?.touched)
+                      ? 'red'
+                      : '',
+                }"
+              >
+                <input
+                  class="passengerInput"
+                  type="text"
+                  formControlName="countryName"
+                  aria-label="country"
+                  [matAutocomplete]="auto"
+                  [matAutocompleteDisabled]="sharedService.screenWidth <= sharedService.webViewBreakPoint"
+                  [readonly]="sharedService.screenWidth <= sharedService.webViewBreakPoint"
+                  #countryInput
+                  [placeholder]="'checkout.travellersDetails.passport.issuingCountry' | translate"
+                  (click)="sharedService.screenWidth <= sharedService.webViewBreakPoint ? openCountrySelection(i) : null"
+                />
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onIssuedCountrySelected($event, i)">
+                  <mat-option *ngFor="let option of filteredCountries[i]" [value]="option.countryName">
+                    {{ option.countryName }}
+                  </mat-option>
+                </mat-autocomplete>
+              </div>
+              @if (
+                isFieldInvalid(i, 'IssuedCountry') ||
+                (!getPassengerForm(i).get('isIssuedCountrySelected')?.value &&
+                  getPassengerForm(i).get('countryName')?.touched)
+              ) {
+                <p class="validation-msg visible">
+                  {{ translate.currentLang === 'en' ? 'Please select a country.' : 'من فضلك اختر دولة.' }}
+                </p>
+              }
+            </div>
+  
+            <div class="d-flex flex-column gap-2 w-50">
+              <label>{{ 'checkout.travellersDetails.passport.expirationDate' | translate }}</label>
+              <div
+                class="custom-input-container"
+                [ngStyle]="{ borderColor: isFieldInvalid(i, 'PassportExpiry') ? 'red' : '' }"
+              >
+                <span class="input-icon">
+                  <img src="assets/icons/calander-input-icon.svg" alt="icon" />
+                </span>
+                <input
+                  class="form-control calendar-input"
+                  ngbDatepicker
+                  container="body"
+                  #exp="ngbDatepicker"
+                  (click)="exp.toggle()"
+                  [minDate]="getMinPassportExpiryDateObj()"
+                  formControlName="PassportExpiration"
+                  [placeholder]="'checkout.travellersDetails.passport.expirationDate' | translate"
+                  readonly
+                />
+              </div>
+              @if (isFieldInvalid(i, 'PassportExpiry')) {
+                <p class="validation-msg visible">
+                  {{ getFieldError(i, 'PassportExpiry') }}
+                </p>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <!-- <button *ngIf="isFormReady && passengerCount > 0" mat-raised-button color="primary" (click)="onSubmit()">{{"checkout.travellersDetails.submit" | translate}}</button> -->
+}

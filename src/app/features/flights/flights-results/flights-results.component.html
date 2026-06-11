@@ -1,0 +1,219 @@
+@if (sharedService.screenWidth >= sharedService.webViewBreakPoint ) {
+  @if (!flightResultService.loading) {
+    @if (flightResultService.response?.airItineraries?.length) {
+      <div class="search-summary">
+        <div class="route-info">
+          <div class="cities">
+            {{
+              flightResultService.orgnizedResponce[0][0].allJourney.flights[0].flightDTO[0].departureTerminalAirport
+                .cityName
+            }},
+            {{
+              flightResultService.orgnizedResponce[0][0].allJourney.flights[0].flightDTO[0].departureTerminalAirport
+                .countryName
+            }}
+            -
+            {{
+              flightResultService.orgnizedResponce[0][0].allJourney.flights[0].flightDTO[
+                flightResultService.orgnizedResponce[0][0].allJourney.flights[0].flightDTO.length - 1
+              ].arrivalTerminalAirport.cityName
+            }},
+            {{
+              flightResultService.orgnizedResponce[0][0].allJourney.flights[0].flightDTO[
+                flightResultService.orgnizedResponce[0][0].allJourney.flights[0].flightDTO.length - 1
+              ].arrivalTerminalAirport.countryName
+            }}
+          </div>
+          <div class="details">
+            <span
+              >{{ 'flight-result.cabin' | translate }} :
+              <span class="highlight">{{ flightResultService.orgnizedResponce[0][0].cabinClass }}</span></span
+            >
+            <span
+              >{{ 'flight-result.travelers' | translate }} :
+              <span class="highlight">{{ flightResultService.response?.searchCriteria?.totalPassengersNum }}</span></span
+            >
+            <span
+              >{{ 'flight-result.dates' | translate }} :
+              @if (flightResultService.response?.searchCriteria?.flights; as flights) {
+              <span class="highlight"
+                >{{
+                  flights[0].departingOnDate
+                    | date: 'EEEE, dd MMMM yyyy' : undefined : (translate.currentLang === 'ar' ? 'ar-EG' : 'en-US')
+                }}
+                -</span
+              >
+                <span class="highlight">{{
+                  flights[flights.length - 1].departingOnDate
+                    | date: 'EEEE, dd MMMM yyyy' : undefined : (translate.currentLang === 'ar' ? 'ar-EG' : 'en-US')
+                }}</span>
+              }
+              </span
+            >
+          </div>
+        </div>
+        <div class="modify-button">
+          <button (click)="toggleSearchBox()">{{ 'flight-result.modifySearch' | translate }}</button>
+        </div>
+      </div>
+    
+      <div class="search-box-container" [class.d-none]="!isSearchBoxOpen">
+        <div [class.container]="sharedService.screenWidth >= sharedService.webViewBreakPoint">
+          <app-flights-search-box [isInFlightResults]="true" />
+        </div>
+      </div>
+    }
+  }
+
+  <!-- <app-flights-search-box/> -->
+  @if (flightResultService.loading) {
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <app-skeleton-loader class="skeleton" height="70px">
+            <div class="loading-msg text-center d-flex align-items-center justify-content-center h-100 gap-3">
+              <mat-spinner diameter="30"></mat-spinner>
+              <p class="m-0 fs-6">{{ 'flight-result.loader' | translate }}</p>
+            </div>
+          </app-skeleton-loader>
+        </div>
+      </div>
+    </div>
+  }
+  <div class="container-fluid mb-5" [class.no-results-container]="!flightResultService.loading && !flightResultService.response?.airItineraries?.length">
+    @if (!flightResultService.loading && !flightResultService.response?.airItineraries?.length) {
+      <div class="alert text-center">
+        <img src="assets/icons/Vector (3).svg" alt="raafat" />
+        <h3 class="result">{{ translate.currentLang === 'en' ? 'No Results' : 'لا يوجد نتائج للبحث' }}</h3>
+        <p class="msg">
+          {{
+            translate.currentLang === 'en'
+              ? 'Sorry, there are no results for your search. Please try a new set of dates.'
+              : 'نأسف، لا يوجد نتأج للبحث الذي قمت به. من فضلك حاول مجدداً مع تواريخ مختلفه'
+          }}
+        </p>
+        <button class="back" (click)="goBack()">
+          {{ translate.currentLang === 'en' ? 'Go Back' : 'إرجع' }}
+        </button>
+      </div>
+    } @else {
+      <div class="row justify-content-center">
+        @if (flightResultService.response?.airItineraries?.length) {
+          <div class="col-md-3 position-relative">
+            <div
+              #filterComponent
+              class="position-sticky filter-wrapper"
+              [ngStyle]="{ top: '-' + (filterHeight - screenHeight + 20) + 'px' }"
+            >
+              <app-filter />
+            </div>
+          </div>
+        }
+
+        <div class="col-md-7">
+          <div class="flight-sorter mb-3 justify-content-center">
+            @if (flightResultService.response?.airItineraries?.length) {
+              <app-head />
+              <app-sort [sortItems]="sortItems" />
+            }
+          </div>
+          @if (!flightResultService.loading) {
+            <div class="d-flex flex-column gap-2">
+              @if (flightResultService.orgnizedResponce.length > 0) {
+                @for (airline of flightResultService.orgnizedResponce; track airline; let i = $index) {
+                  <app-flight-results-page-card [details]="airline" [showTag]="!i" [showPriceBox]="true" [index]="i" />
+                }
+              } @else {
+                <div>
+                  <div class="alert text-center">
+                    <img src="assets/icons/Vector (3).svg" alt="raafat" />
+                    <h3 class="result">{{ translate.currentLang === 'en' ? 'No Results' : 'لا يوجد نتائج للبحث' }}</h3>
+                    <p class="msg">
+                      {{
+                        translate.currentLang === 'en'
+                          ? 'Sorry, there are no results for your search. Please try a new set of dates.'
+                          : 'نأسف، لا يوجد نتأج للبحث الذي قمت به. من فضلك حاول مجدداً مع تواريخ مختلفه'
+                      }}
+                    </p>
+                    <button class="back" (click)="goBack()">
+                      {{ translate.currentLang === 'en' ? 'Go Back' : 'إرجع' }}
+                    </button>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+} @else {
+  <app-head [class.d-none]="flightResultService.loading" />
+
+  @if (flightResultService.loading) {
+    <div class="d-flex gap-3 p-2">
+      <div class="skeleton text-transparent">Loading .....</div>
+      <div class="skeleton text-transparent">Loading .....</div>
+      <div class="skeleton text-transparent">Loading .....</div>
+    </div>
+    <div class="skeleton text-transparent h-50 ms-2 mb-2">Loading .....</div>
+  } @else {
+    <app-sort (openFilter)="toggleComponent()" [sortItems]="sortItems" />
+  }
+  <div class="overlay" *ngIf="showFilterComponent"></div>
+
+  @if (flightResultService.response?.airItineraries?.length) {
+    <div class="sidebar" [class.show]="showFilterComponent">
+      <div class="d-flex justify-content-end mb-2">
+        <button (click)="closeComponent()" class="btn circle-button">✕</button>
+      </div>
+
+      <app-filter />
+    </div>
+  }
+
+  @if (flightResultService.loading) {
+    <app-flight-card-skeleton-loader />
+    <app-flight-card-skeleton-loader />
+    <app-flight-card-skeleton-loader />
+    <app-flight-card-skeleton-loader />
+  } @else {
+    @if (!flightResultService.response?.airItineraries?.length) {
+      <div class="alert text-center">
+        <img src="assets/icons/Vector (3).svg" alt="raafat" />
+        <h3 class="result">{{ translate.currentLang === 'en' ? 'No Results' : 'لا يوجد نتائج للبحث' }}</h3>
+        <p class="msg">
+          {{
+            translate.currentLang === 'en'
+              ? 'Sorry, there are no results for your search. Please try a new set of dates.'
+              : 'نأسف، لا يوجد نتأج للبحث الذي قمت به. من فضلك حاول مجدداً مع تواريخ مختلفه'
+          }}
+        </p>
+        <button class="back" (click)="goBack()">{{ translate.currentLang === 'en' ? 'Go Back' : 'إرجع' }}</button>
+      </div>
+    } @else {
+      <div class="d-flex flex-column gap-4">
+        @if (flightResultService.orgnizedResponce.length > 0) {
+          @for (airline of flightResultService.orgnizedResponce; track airline; let i = $index) {
+            <app-flight-results-page-card [details]="airline" [showTag]="!i" [showPriceBox]="true" [index]="i" />
+          }
+        } @else {
+          <div>
+            <div class="alert text-center">
+              <img src="assets/icons/Vector (3).svg" alt="raafat" />
+              <h3 class="result">{{ translate.currentLang === 'en' ? 'No Results' : 'لا يوجد نتائج للبحث' }}</h3>
+              <p class="msg">
+                {{
+                  translate.currentLang === 'en'
+                    ? 'Sorry, there are no results for your search. Please try a new set of dates.'
+                    : 'نأسف، لا يوجد نتأج للبحث الذي قمت به. من فضلك حاول مجدداً مع تواريخ مختلفه'
+                }}
+              </p>
+              <button class="back" (click)="goBack()">{{ translate.currentLang === 'en' ? 'Go Back' : 'إرجع' }}</button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  }
+}

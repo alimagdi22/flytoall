@@ -1,0 +1,153 @@
+@import 'colors';
+
+header {
+  background-color: map-get($map: $blue, $key: 'one');
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  margin-bottom: 20px;
+  width: 32.5%;
+  @media (max-width: 768px) {
+  width: 100%;
+  }
+
+  button {
+    background-color: map-get($map: $green, $key: 'one');
+    color: white;
+    font-size: 16px;
+    border-radius: 10px;
+    border: none;
+    padding: 0.5rem 1rem;
+  }
+
+  span {
+    font-weight: bold;
+    font-size: 18px;
+    color: white;
+  }
+}
+
+
+.otp {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 20px;
+
+  &__icon {
+    display: flex;
+    justify-content: center;
+
+    img {
+      width: 50px;
+    }
+  }
+
+  ::ng-deep {
+    .otp-input {
+      width: 50px !important;
+      height: 50px !important;
+      padding: 5px !important;
+      margin: 0 5px !important;
+      border: 1px solid gray !important;
+      border-radius: 12px !important;
+      outline: none !important;
+      text-align: center !important;
+      font-size: 20px !important;
+      background-color: transparent !important;
+
+      &:focus {
+        border-color: map-get($map: $blue, $key: 'one') !important;
+        box-shadow: 0 0 5px rgba(0, 128, 0, 0.2);
+      }
+    }
+  }
+
+  p {
+    text-align: center;
+  }
+
+  button {
+    position: relative;
+
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+
+    padding: 10px 20px;
+    height: 48px;
+    font-weight: bold;
+    color: white;
+    border: 1px solid transparent;
+    border-radius: 50px;
+    background-color: map-get($map: $blue, $key: 'one');
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      background-color 0.3s,
+      color 0.3s;
+
+    &:hover {
+      background-color: white;
+      border: 1px solid map-get($map: $blue, $key: 'one');
+      color: map-get($map: $blue, $key: 'one');
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 5px rgba(0, 128, 0, 0.8);
+    }
+  }
+
+  &__footer {
+    cursor: pointer;
+    display: flex;
+    gap: 5px;
+    color: #686872;
+  }
+
+  &__resend {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+
+    &-btn {
+      &--disabled {
+        background-color: #ccc !important;
+        border-color: #ccc !important;
+        cursor: not-allowed !important;
+        color: #fff !important;
+
+        &:hover {
+          background-color: #ccc !important;
+          color: #fff !important;
+          border-color: #ccc !important;
+        }
+      }
+    }
+  }
+
+  .validation-msg {
+    color: map-get($map: $red, $key: 'one');
+    font-size: 12px;
+    font-weight: 300;
+    text-align: center;
+    margin: 0;
+  }
+
+  .success-msg {
+    color: map-get($map: $green, $key: 'one');
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+  }
+}

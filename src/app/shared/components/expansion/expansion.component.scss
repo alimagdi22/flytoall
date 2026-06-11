@@ -1,0 +1,9 @@
+::ng-deep mat-expansion-panel {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  background-color: white !important;
+  margin-bottom: 2px; // small margin to prevent shadow overlap clipping
+}
+
+mat-panel-title {
+  font-weight: 600;
+}

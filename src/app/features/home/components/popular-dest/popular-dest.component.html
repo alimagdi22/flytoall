@@ -1,0 +1,17 @@
+@if (sharedService.screenWidth < sharedService.webViewBreakPoint) {
+  <h4 class="fw-bold mx-3 mt-5 text-center">{{ 'home.popularDestination' | translate }}</h4>
+} @else {
+  <p class="deals-title mx-3 mt-5 text-center">{{ 'home.popularDestination' | translate }}</p>
+  <p class="deals-description mt-3 text-center">{{ 'home.popularDestinationDesc' | translate }}</p>
+}
+
+<div class="container mt-2">
+  <div class="row justify-content-center">
+    @for (popularDestination of popularDestinations; track popularDestination) {
+      <app-popular-dest-card
+        [popularDestination]="translate.currentLang === 'en' ? popularDestination.en : popularDestination.ar"
+        class="col-12 col-xl-6"
+      />
+    }
+  </div>
+</div>

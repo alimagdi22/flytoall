@@ -1,0 +1,106 @@
+@if (sharedService.screenWidth >= sharedService.webViewBreakPoint) {
+  <h1 class="text-center mt-2">{{ 'user.login.title' | translate }}</h1>
+} @else {
+  <app-input-header [headerTitle]="'user.login.title' | translate" (onClickClose)="dismiss.emit()" />
+}
+
+<div class="login">
+  <form
+    class="login__form"
+    [formGroup]="authService.loginForm"
+    [ngStyle]="sharedService.screenWidth >= sharedService.webViewBreakPoint ? { gap: '0' } : {}"
+  >
+    <div class="login__form__input">
+      <label>{{ 'user.login.emailLabel' | translate }}</label>
+      <input type="text" [placeholder]="'user.login.emailPlaceholder' | translate" formControlName="email" />
+
+      @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+        <p class="validation-msg">
+          {{ getEmailErrorMessage(loginForm.get('email')!, lang) }}
+        </p>
+      } @else {
+        <p
+          class="validation-msg"
+          [ngStyle]="{
+            visibility: 'hidden',
+          }"
+        >
+          {{ 'user.login.errorMessagePlaceholder' | translate }}
+        </p>
+      }
+    </div>
+
+    <div class="login__form__input">
+      <label>{{ 'user.login.passwordLabel' | translate }}</label>
+      <div class="password-wrapper">
+        <input [type]="showPassword ? 'text' : 'password'" [placeholder]="'user.login.passwordPlaceholder' | translate" formControlName="password" />
+        <button type="button" class="eye-toggle" (click)="showPassword = !showPassword" tabindex="-1">
+          @if (showPassword) {
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          } @else {
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          }
+        </button>
+      </div>
+
+      @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+        <p class="validation-msg">
+          {{ getPasswordErrorMessage(loginForm.get('password')!, lang, false) }}
+        </p>
+      } @else {
+        <p
+          class="validation-msg"
+          [ngStyle]="{
+            visibility: 'hidden',
+          }"
+        >
+          {{ 'user.login.errorMessagePlaceholder' | translate }}
+        </p>
+      }
+    </div>
+
+    @if (error) {
+      <p class="validation-msg">
+        {{ 'user.login.invalidUserError' | translate }}
+      </p>
+    } @else {
+      <p
+        class="validation-msg"
+        [ngStyle]="{
+          visibility: 'hidden',
+        }"
+      >
+        {{ 'user.login.errorMessagePlaceholder' | translate }}
+      </p>
+    }
+  </form>
+
+  <div
+    class="login__actions"
+    [ngStyle]="sharedService.screenWidth >= sharedService.webViewBreakPoint ? { 'margin-top': '-30px' } : {}"
+  >
+    <p (click)="goToRestPassword($event)" [class.text-start]="lang === 'ar'">
+      {{ 'user.login.forgotPassword' | translate }}
+    </p>
+    <button (click)="onSubmit()" [disabled]="isLoading || loginForm.invalid">
+      @if (!isLoading) {
+        {{ 'user.login.signIn' | translate }}
+      } @else {
+        <mat-spinner diameter="20" color="accent"></mat-spinner>
+      }
+    </button>
+    <!-- <button class="google" (click)="googleLoginSubmit()">
+      <img src="assets/icons/user/google-icon.svg" title="Google Icon" />
+      {{ 'user.login.signInWithGoogle' | translate }}
+    </button> -->
+    <!-- <button class="facebook" (click)="loginWithFacebook()">
+      <img src="assets/icons/user/facebook-svgrepo-com.svg" title="facebook Icon" />
+      {{ 'user.login.signInWithFacebook' | translate }}
+    </button> -->
+  </div>
+
+  <footer class="login__footer">
+    {{ 'user.login.noAccount' | translate }}
+    <span (click)="goToSignUp($event)">{{ 'user.login.signUp' | translate }}</span>
+  </footer>
+</div>

@@ -1,0 +1,76 @@
+<h3 class="col-12">{{ 'checkout.contactDetails.contactDetails' | translate }}</h3>
+
+<form [formGroup]="contactForm">
+  <div class="custom-radio-group">
+    <div>
+      <label>{{ 'checkout.contactDetails.phone' | translate }}</label>
+
+      <ngx-intl-tel-input
+        name="phone"
+        [cssClass]="isPhoneNumberInvalid ? 'alert' : 'custom-phone-container'"
+        [preferredCountries]="['us', 'gb', 'eg', 'sa']"
+        [enableAutoCountrySelect]="true"
+        [enablePlaceholder]="true"
+        [searchCountryFlag]="true"
+        [searchCountryPlaceholder]="'Search country name, code, or +dial'"
+        [searchCountryField]="[SearchCountryField.All]"
+        [selectedCountryISO]="CountryISO.Egypt"
+        formControlName="phone"
+        (input)="checkPhoneNumberValidation()"
+        (countryChange)="onPhoneNumberChange($event)"
+        (blur)="onFieldBlur('phone')"
+      >
+      </ngx-intl-tel-input>
+      @if (isPhoneNumberInvalid) {
+        <p
+          [ngStyle]="{
+            visibility: 'visible',
+          }"
+          class="validation-msg"
+        >
+          {{ lang === 'en' ? 'Please enter valid phone number.' : 'من فضلك ادخل رقم هاتف صحيح' }}
+        </p>
+      }
+    </div>
+
+    <div>
+      <label>{{ 'checkout.contactDetails.email' | translate }}</label>
+      <div
+        class="custom-input-container"
+        [ngStyle]="{ borderColor: contactForm.get('email')?.invalid && contactForm.get('email')?.touched ? 'red' : '' }"
+      >
+        <span class="input-icon">
+          <img src="assets/icons/email-icon.svg" alt="icon" />
+        </span>
+        <input
+          type="text"
+          title="Email"
+          [placeholder]="'checkout.contactDetails.email' | translate"
+          formControlName="email"
+          (blur)="onFieldBlur('email')"
+          (input)="onEmailInput($event)"
+        />
+      </div>
+
+      @if (contactForm.get('email')?.invalid && contactForm.get('email')?.touched) {
+        <p
+          [ngStyle]="{
+            visibility: 'visible',
+          }"
+          class="validation-msg"
+        >
+          {{ getFieldError('email') }}
+        </p>
+      } @else {
+        <p
+          [ngStyle]="{
+            visibility: 'hidden',
+          }"
+          class="validation-msg"
+        >
+          Error Message Placeholder
+        </p>
+      }
+    </div>
+  </div>
+</form>

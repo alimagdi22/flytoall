@@ -1,0 +1,89 @@
+@if (flightCheckoutService.selectedFlight?.airItineraryDTO && selectedFlight &&  (sharedService.screenWidth >= sharedService.webViewBreakPoint)) {
+  <div class="search-summary">
+      <div class="route-info">
+        @if(flightCheckoutService.selectedFlight){
+
+          <div class="cities">
+            {{
+              flightCheckoutService.selectedFlight.airItineraryDTO.allJourney.flights[0].flightDTO[0].departureTerminalAirport
+                .cityName
+            }},
+            {{
+              flightCheckoutService.selectedFlight.airItineraryDTO.allJourney.flights[0].flightDTO[0].departureTerminalAirport
+                .countryName
+            }}
+            -
+            {{
+              flightCheckoutService.selectedFlight.airItineraryDTO.allJourney.flights[0].flightDTO[
+                flightCheckoutService.selectedFlight.airItineraryDTO.allJourney.flights[0].flightDTO.length - 1
+              ].arrivalTerminalAirport.cityName
+            }},
+            {{
+              flightCheckoutService.selectedFlight.airItineraryDTO.allJourney.flights[0].flightDTO[
+                flightCheckoutService.selectedFlight.airItineraryDTO.allJourney.flights[0].flightDTO.length - 1
+              ].arrivalTerminalAirport.countryName
+            }}
+          </div>
+          <div class="details">
+            <span
+              >{{ 'flight-result.cabin' | translate }} :
+              <span class="highlight">{{ flightCheckoutService.selectedFlight.airItineraryDTO.cabinClass }}</span></span
+            >
+            <span
+              >{{ 'flight-result.travelers' | translate }} :
+              <span class="highlight">{{ flightCheckoutService.selectedFlight.searchCriteria.totalPassengersNum}}</span></span
+            >
+            <span
+              >{{ 'flight-result.dates' | translate }} :
+              <span class="highlight"
+                >{{
+                  flightCheckoutService.selectedFlight.airItineraryDTO.deptDate | date: 'EEEE, dd MMMM yyyy' : undefined : (translate.currentLang === 'ar' ? 'ar-EG' : 'en-US')
+                }}
+                -</span
+              >
+              <span class="highlight">{{
+                flightCheckoutService.selectedFlight.airItineraryDTO.arrivalDate
+                  | date: 'EEEE, dd MMMM yyyy' : undefined : (translate.currentLang === 'ar' ? 'ar-EG' : 'en-US')
+              }}</span>
+              </span>
+          </div>
+        }
+      </div>
+      @if (!sharedService.isSegmentPresent(['mpgs-auth'])) {
+        <div class="modify-button">
+          <button (click)="goBackToResultsPage()">
+            <img src="assets/icons/arrow-white.svg" width="15" />
+            {{ 'checkout.goBack' | translate }}
+          </button>
+        </div>
+      }
+    </div>
+}
+
+<div class="sec">
+  <router-outlet></router-outlet>
+</div>
+
+<app-session-timeout-popup
+  [timeoutSeconds]="7200"
+  [message]="sharedService.lang === 'en' ? 'Sorry, your session has expired!' : 'عذراً، انتهت جلستك!'"
+  [buttonText]="sharedService.lang === 'en' ? 'Search Again' : 'البحث مرة أخرى'"
+  redirectPath="/"
+  bgColor="#fff"
+  textColor="#000"
+  buttonBgColor="#dc3545"
+  buttonTextColor="#fff"
+/>
+
+@if (isSelectedFlightInvalid) {
+  <app-session-timeout-popup
+    [timeoutSeconds]="0"
+    [message]="sharedService.lang === 'en' ? 'Sorry, your session has expired!' : 'عذراً، انتهت جلستك!'"
+    [buttonText]="sharedService.lang === 'en' ? 'Search Again' : 'البحث مرة أخرى'"
+    redirectPath="/"
+    bgColor="#fff"
+    textColor="#000"
+    buttonBgColor="#dc3545"
+    buttonTextColor="#fff"
+  />
+}

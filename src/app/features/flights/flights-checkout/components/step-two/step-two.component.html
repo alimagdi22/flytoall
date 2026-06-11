@@ -1,0 +1,50 @@
+<!-- @if(sharedService.loader) {
+  <app-loader diameter="200px" color="##198754" />
+} @else { -->
+<!-- Mobile View -->
+@if (sharedService.screenWidth < sharedService.webViewBreakPoint) {
+  <!-- <app-flight-result-card
+    [details]="airItineraries ? [airItineraries] : []"
+    [showIconInDetails]="true"
+    [ShowBagsInDetails]="true"
+    [isExpanded]="false"
+    [searchCriteria]="flightData.searchCriteria"
+  >
+    <button class="flight-details-btn" (click)="goToFlightDetails(airItineraries ? [airItineraries] : [])">
+      {{ 'flightDetails.title' | translate }}
+    </button>
+  </app-flight-result-card> -->
+  <div class="container steps">
+    <app-checkout-steps />
+  </div>
+  <app-flight-info [details]="airItineraries ? [airItineraries] : []" />
+  <app-login-section />
+  <app-contact-details id="contact-details-section" />
+  <app-travellers-details id="travellers-details-section" />
+  <app-payment-method id="payment-method-section" />
+}
+
+<!-- Desktop View -->
+@else {
+  <div class="desktop-layout" [ngClass]="{ ar: translate.currentLang === 'ar' }">
+    <div class="main-content">
+      <div class="container steps">
+        <app-checkout-steps />
+      </div>
+      <div class="section">
+        <app-flight-info [details]="airItineraries ? [airItineraries] : []" />
+      </div>
+      <div class="section" id="travellers-details-section">
+        <app-travellers-details />
+      </div>
+      <div class="section" id="payment-method-section">
+        <app-payment-method />
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <app-fare-breakdown />
+    </div>
+  </div>
+}
+<!-- } -->

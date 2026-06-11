@@ -1,0 +1,21 @@
+@import 'colors';
+
+.mobile-ad-wrapper {
+  background-color: map-get($map: $blue, $key: 'one');
+  margin-inline: 10px;
+  margin-block: 70px;
+}
+
+@media (max-width: $web-view-break-point) {
+  button {
+    img {
+      width: 150px;
+      object-fit: contain;
+    }
+  }
+
+  .mobile-image {
+    width: 300px;
+    object-fit: contain;
+  }
+}

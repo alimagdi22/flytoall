@@ -1,0 +1,27 @@
+<div class="banner">
+  <div class="title-container">
+    <span>{{ 'home.title' | translate }}</span>
+  </div>
+
+  <div class="search-box-container">
+    <div class="search-box">
+      <app-flights-search-box />
+    </div>
+  </div>
+</div>
+
+<main class="container">
+  <div class="promo d-flex align-items-center justify-content-center">
+    <span class="text-white fw-bold">{{ 'home.promo' | translate }}</span>
+  </div>
+  <app-popular-dest />
+  <app-why-us />
+  @if (
+    !mostSearchedFlightsService.isEmpty && !mostSearchedFlightsService.isError && !mostSearchedFlightsService.isLoading
+  ) {
+    <app-most-searched-flights />
+  }
+
+  <app-mobile-app-ad />
+  <app-most-popular-airlines />
+</main>

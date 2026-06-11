@@ -1,0 +1,104 @@
+<!-- <img
+  class="position-relative mb-1"
+  [ngClass]="{ 'flip-horizontal': currentLang === 'en' }"
+  [src]="'assets/images/flight-en' + (flight.stopsNum === 1 ? '-one' : flight.stopsNum >= 2 ? '-two' : '') + '.png'"
+  alt="Flight"
+/> -->
+<div class="divider text-center d-flex justify-content-start">
+  <ng-container [ngSwitch]="flight.stopsNum">
+    <ng-container *ngSwitchCase="0">
+      <div class="mobile-transit-wrapper">
+        <div class="stops-info">
+          <p class="stops-text mb-0">
+            {{ 'flight-result.direct' | translate }}
+          </p>
+
+          @if (flight.flightDTO[0].transitTime !== '00:00:00') {
+            <p class="text-danger mb-0 small">
+              | {{ flight.flightDTO[0].transitTime }} in {{ flight.flightDTO[0].arrivalTerminalAirport.cityCode }}
+            </p>
+          }
+        </div>
+
+        <div class="stop-line-container">
+          <div class="circle"></div>
+          <div class="line-wrapper">
+            <div class="dotted-line"></div>
+          </div>
+          <div class="circle"></div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="1">
+      <div class="mobile-transit-wrapper">
+        <div class="stops-info">
+          <p class="stops-text mb-0">
+            {{ 'flight-result.oneStop' | translate }}
+          </p>
+          <p class="transit-time mb-0 text-danger small">
+            | {{ getTotalTransitMinutes(flight.flightDTO[0].transitTime) | durationFormat }}
+          </p>
+        </div>
+
+        <div class="stop-line-container">
+          <div class="circle"></div>
+          <div class="line-wrapper">
+            <div class="dotted-line"></div>
+            <div
+              class="solid-line"
+              [ngStyle]="{
+                width: getTransitLineWidth(convertTimeToMinutes(flight.flightDTO[0].transitTime)),
+                left: '50%',
+                transform: 'translateX(-50%)',
+              }"
+            ></div>
+          </div>
+          <div class="circle"></div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="2">
+      <div class="mobile-transit-wrapper">
+        <div class="stops-info">
+          <p class="stops-text mb-0">
+            {{ 'flight-result.twoStop' | translate }}
+          </p>
+          <p class="text-muted mb-0 small">
+            |
+            {{
+              getTotalTransitMinutes(flight.flightDTO[0].transitTime, flight.flightDTO[1].transitTime) | durationFormat
+            }}
+          </p>
+        </div>
+
+        <div class="stop-line-container">
+          <div class="circle"></div>
+          <div class="line-wrapper">
+            <div class="dotted-line"></div>
+
+            <div
+              class="solid-line"
+              [ngStyle]="{
+                width: getTransitLineWidth(convertTimeToMinutes(flight.flightDTO[0].transitTime)),
+                left: '25%',
+                transform: 'translateX(-50%)',
+              }"
+            ></div>
+
+            <div
+              class="solid-line"
+              [ngStyle]="{
+                width: getTransitLineWidth(convertTimeToMinutes(flight.flightDTO[1].transitTime)),
+                left: '75%',
+                transform: 'translateX(-50%)',
+              }"
+            ></div>
+          </div>
+          <div class="circle"></div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>
