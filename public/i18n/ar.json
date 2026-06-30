@@ -211,7 +211,11 @@
       "privacyPolicy": "أعطي اجازة الإذن بإرسال رسائل بريد إلكتروني ورسائل نصية إعلامية وترويجية وفقًا لـ",
       "privacyPolicyLink": "سياسة الخصوصية",
       "changePassword": "تغيير كلمة المرور",
-      "save": "حفظ"
+      "save": "حفظ",
+      "updateSuccessTitle": "تم تحديث الملف الشخصي",
+      "updateSuccessMessage": "تم تحديث معلومات ملفك الشخصي بنجاح.",
+      "updateErrorTitle": "فشل التحديث",
+      "updateErrorMessage": "فشل تحديث ملفك الشخصي. يرجى المحاولة مرة أخرى."
     },
 
     "changePassword": {
@@ -219,7 +223,11 @@
       "currentPassword": "كلمة المرور الحالية",
       "newPassword": "كلمة المرور الجديدة",
       "confirmNewPassword": "تأكيد كلمة المرور الجديدة",
-      "save": "حفظ"
+      "save": "حفظ",
+      "updateSuccessTitle": "تم تغيير كلمة المرور",
+      "updateSuccessMessage": "تم تغيير كلمة مرورك بنجاح.",
+      "updateErrorTitle": "فشل تغيير كلمة المرور",
+      "updateErrorMessage": "فشل تغيير كلمة المرور. يرجى المحاولة مرة أخرى."
     },
 
     "hotels": {

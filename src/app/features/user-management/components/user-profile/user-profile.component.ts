@@ -3,6 +3,8 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { IMainButton } from '../../../../shared/models/mainButton.model';
 import { UserProfileService } from 'rp-travel-ui';
 import { Subscription } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user-profile',
@@ -11,7 +13,6 @@ import { Subscription } from 'rxjs';
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
   isChangePasswordShowed = false;
-
   isPhoneNumberValid = false;
   // CountryISO = CountryISO;
   genderOptions = ['Male', 'Female'];
@@ -24,6 +25,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   };
 
   userProfileService = inject(UserProfileService);
+  translate = inject(TranslateService);
   subscription = new Subscription();
 
   ngOnInit(): void {
@@ -41,12 +43,34 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this.userProfileService.notify.subscribe({
         next: (status) => {
           if (status === 2) {
-            this.isChangePasswordShowed = false;
+            if (this.isChangePasswordShowed) {
+              Swal.fire({
+                icon: 'success',
+                title: this.translate.instant('user.changePassword.updateSuccessTitle'),
+                text: this.translate.instant('user.changePassword.updateSuccessMessage'),
+              });
+              this.isChangePasswordShowed = false;
+            } else {
+              Swal.fire({
+                icon: 'success',
+                title: this.translate.instant('user.profile.updateSuccessTitle'),
+                text: this.translate.instant('user.profile.updateSuccessMessage'),
+              });
+            }
           } else if (status === 1) {
-            // Swal.fire({
-            //   icon: 'error',
-            //   title: this.translateService.currentLang === 'en' ? "Update Password Didn't Success" : 'لم تنجح العملية'
-            // });
+            if (this.isChangePasswordShowed) {
+              Swal.fire({
+                icon: 'error',
+                title: this.translate.instant('user.changePassword.updateErrorTitle'),
+                text: this.translate.instant('user.changePassword.updateErrorMessage'),
+              });
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: this.translate.instant('user.profile.updateErrorTitle'),
+                text: this.translate.instant('user.profile.updateErrorMessage'),
+              });
+            }
           } else if (status === 0) {
             const user = this.userProfileService.user;
 
