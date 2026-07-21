@@ -81,11 +81,11 @@ export class AppComponent implements OnInit {
     };
     let envFly = {
       offlineSeats: 'http://41.223.55.14:7025',
-      searchflow: 'http://154.41.209.93:8057',
-      FareRules: 'http://154.41.209.93:8056',
-      // searchflow: 'https://flightsearch.flytoall.com',
+      // searchflow: 'http://154.41.209.93:8057',
+      // FareRules: 'http://154.41.209.93:8056',
+      searchflow: 'https://flightsearch.flytoall.com',
       BookingFlow: 'https://flightflow.flytoall.com',
-      // FareRules: 'https://flightprov.flytoall.com',
+      FareRules: 'https://flightprov.flytoall.com',
       asm: 'https://backofficeapi.flytoall.com',
       Apihotels: 'https://hotelsapi.flytoall.com',
       users: 'https://Usersapi.flytoall.com',
