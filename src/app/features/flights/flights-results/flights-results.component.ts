@@ -8,6 +8,7 @@ import { GoogleTagManagerService } from 'angular-google-tag-manager';
 import { ISortItem } from '../../../shared/models/sortItem.model';
 import { SharedService } from '../../../shared/shared.service';
 @Component({
+  standalone: false,
   selector: 'app-flights-results',
   templateUrl: './flights-results.component.html',
   styleUrl: './flights-results.component.scss',

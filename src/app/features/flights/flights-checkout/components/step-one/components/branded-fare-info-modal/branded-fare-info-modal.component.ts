@@ -2,6 +2,7 @@ import { Component, EventEmitter, inject, Input, Output, SimpleChanges } from '@
 import { TranslateService } from '@ngx-translate/core';
 import { flightOfflineService } from 'rp-travel-ui';
 @Component({
+  standalone: false,
   selector: 'app-branded-fare-info-modal',
   templateUrl: './branded-fare-info-modal.component.html',
   styleUrls: ['./branded-fare-info-modal.component.scss'],

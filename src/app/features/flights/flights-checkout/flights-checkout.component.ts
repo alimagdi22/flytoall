@@ -13,6 +13,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { GoogleTagManagerService } from 'angular-google-tag-manager';
 
 @Component({
+  standalone: false,
   selector: 'app-flights-checkout',
   templateUrl: './flights-checkout.component.html',
   styleUrls: ['./flights-checkout.component.scss'],

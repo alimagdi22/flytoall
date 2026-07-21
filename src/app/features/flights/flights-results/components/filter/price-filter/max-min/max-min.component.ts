@@ -2,6 +2,7 @@ import { Component, inject, Input } from '@angular/core';
 import { HomePageService } from 'rp-travel-ui';
 
 @Component({
+  standalone: false,
   selector: 'app-max-min',
   templateUrl: './max-min.component.html',
   styleUrl: './max-min.component.scss',

@@ -2,6 +2,7 @@ import { Component, inject, Input } from '@angular/core';
 import { FlightResultService, ISearchCriteria } from 'rp-travel-ui';
 
 @Component({
+  standalone: false,
   selector: 'app-flight-details-body',
   templateUrl: './flight-details-body.component.html',
   styleUrl: './flight-details-body.component.scss',

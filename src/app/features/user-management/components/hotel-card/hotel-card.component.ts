@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { ICardModel } from 'rp-travel-ui';
 
 @Component({
+  standalone: false,
   selector: 'app-hotel-card',
   templateUrl: './hotel-card.component.html',
   styleUrls: ['./hotel-card.component.scss'],

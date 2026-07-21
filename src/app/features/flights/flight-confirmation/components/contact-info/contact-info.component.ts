@@ -3,6 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { PassengersDetailsEntity } from 'rp-travel-ui';
 
 @Component({
+  standalone: false,
   selector: 'app-contact-info',
   templateUrl: './contact-info.component.html',
   styleUrl: './contact-info.component.scss',

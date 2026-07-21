@@ -3,6 +3,7 @@ import { SharedService } from '../../../../shared/shared.service';
 import { MostSearchedFlightsService } from './most-searched-flights.service';
 
 @Component({
+  standalone: false,
   selector: 'app-most-searched-flights',
   templateUrl: './most-searched-flights.component.html',
   styleUrl: './most-searched-flights.component.scss',

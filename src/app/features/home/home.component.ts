@@ -5,6 +5,7 @@ import { MostSearchedFlightsService } from './components/most-searched-flights/m
 import { FlightResultService } from 'rp-travel-ui';
 
 @Component({
+  standalone: false,
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',

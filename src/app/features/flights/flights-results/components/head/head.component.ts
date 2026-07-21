@@ -10,6 +10,7 @@ import { Navigation } from 'swiper/modules';
 Swiper.use([Navigation]);
 
 @Component({
+  standalone: false,
   selector: 'app-head',
   templateUrl: './head.component.html',
   styleUrls: ['./head.component.scss'],

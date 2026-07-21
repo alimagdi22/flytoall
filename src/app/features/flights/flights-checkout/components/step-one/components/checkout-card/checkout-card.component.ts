@@ -17,6 +17,7 @@ import { SharedService } from '../../../../../../../shared/shared.service';
 import { FlightDetailsComponent } from '../../../../../flights-results/components/flight-details/flight-details.component';
 import { ActivatedRoute, Router } from '@angular/router';
 @Component({
+  standalone: false,
   selector: 'app-checkout-card',
   templateUrl: './checkout-card.component.html',
   styleUrl: './checkout-card.component.scss',

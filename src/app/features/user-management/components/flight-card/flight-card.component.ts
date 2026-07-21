@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 import { ICardModel } from 'rp-travel-ui';
 
 @Component({
+  standalone: false,
   selector: 'app-flight-card',
   templateUrl: './flight-card.component.html',
   styleUrls: ['./flight-card.component.scss'],

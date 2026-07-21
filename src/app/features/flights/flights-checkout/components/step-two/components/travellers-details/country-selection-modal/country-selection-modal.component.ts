@@ -5,6 +5,7 @@ import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
+  standalone: false,
   selector: 'app-country-selection-modal',
   templateUrl: './country-selection-modal.component.html',
   styleUrls: ['./country-selection-modal.component.scss'],

@@ -9,6 +9,7 @@ export interface IPouplarDest {
 }
 
 @Component({
+  standalone: false,
   selector: 'app-popular-dest',
   templateUrl: './popular-dest.component.html',
   styleUrl: './popular-dest.component.scss',

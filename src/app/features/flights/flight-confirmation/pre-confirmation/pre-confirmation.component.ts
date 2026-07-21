@@ -13,6 +13,7 @@ export interface paymentinfo {
 }
 
 @Component({
+  standalone: false,
   selector: 'app-pre-confirmation',
   templateUrl: './pre-confirmation.component.html',
   styleUrls: ['./pre-confirmation.component.scss'],

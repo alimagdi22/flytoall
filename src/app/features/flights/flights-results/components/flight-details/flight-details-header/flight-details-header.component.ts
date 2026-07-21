@@ -4,6 +4,7 @@ import { SharedService } from '../../../../../../shared/shared.service';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
+  standalone: false,
   selector: 'app-flight-details-header',
   templateUrl: './flight-details-header.component.html',
   styleUrl: './flight-details-header.component.scss',

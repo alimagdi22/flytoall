@@ -3,6 +3,7 @@ import { IMainButton } from '../../../../../shared/models/flights/mainButton.mod
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'app-confirmation-header',
   templateUrl: './confirmation-header.component.html',
   styleUrl: './confirmation-header.component.scss',

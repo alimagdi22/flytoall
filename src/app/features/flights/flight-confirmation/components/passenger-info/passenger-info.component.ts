@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { PassengersDetailsEntity } from 'rp-travel-ui';
 
 @Component({
+  standalone: false,
   selector: 'app-passenger-info',
   templateUrl: './passenger-info.component.html',
   styleUrl: './passenger-info.component.scss',

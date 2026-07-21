@@ -3,6 +3,7 @@ import { SharedService } from '../../../../../../../shared/shared.service';
 import { FlightSharedService } from '../../../../../../../core/services/flightShared.service';
 
 @Component({
+  standalone: false,
   selector: 'app-itinerary',
   templateUrl: './itinerary.component.html',
   styleUrl: './itinerary.component.scss',

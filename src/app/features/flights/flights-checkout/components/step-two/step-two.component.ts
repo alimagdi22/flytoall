@@ -8,6 +8,7 @@ import { FlightDetailsComponent } from '../../../flights-results/components/flig
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
+  standalone: false,
   selector: 'app-step-two',
   templateUrl: './step-two.component.html',
   styleUrl: './step-two.component.scss',

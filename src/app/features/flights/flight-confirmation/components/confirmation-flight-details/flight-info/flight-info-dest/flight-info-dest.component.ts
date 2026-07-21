@@ -3,6 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { FLIGHT_DTO_DEFAULT, IFlightDTO } from 'rp-travel-ui';
 
 @Component({
+  standalone: false,
   selector: 'app-flight-info-dest',
   templateUrl: './flight-info-dest.component.html',
   styleUrl: './flight-info-dest.component.scss',

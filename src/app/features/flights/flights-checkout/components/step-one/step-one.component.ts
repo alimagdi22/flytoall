@@ -23,6 +23,7 @@ import { FlightDetailsComponent } from '../../../flights-results/components/flig
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
+  standalone: false,
   selector: 'app-step-one',
   templateUrl: './step-one.component.html',
   styleUrls: ['./step-one.component.scss'],

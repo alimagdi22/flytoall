@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
+  standalone: false,
   selector: 'app-flight-info',
   templateUrl: './flight-info.component.html',
   styleUrl: './flight-info.component.scss',

@@ -2,6 +2,7 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'app-session-timeout-popup',
   templateUrl: './session-timeout-popup.component.html',
   styleUrls: ['./session-timeout-popup.component.scss'],

@@ -3,6 +3,7 @@ import { ICardModel, TripsService } from 'rp-travel-ui';
 import { Subscription } from 'rxjs';
 
 @Component({
+  standalone: false,
   selector: 'app-flight-booking',
   templateUrl: './flight-booking.component.html',
   styleUrl: './flight-booking.component.scss',

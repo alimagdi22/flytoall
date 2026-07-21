@@ -8,6 +8,7 @@ import { Auth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'app-login-section',
   templateUrl: './login-section.component.html',
   styleUrl: './login-section.component.scss',

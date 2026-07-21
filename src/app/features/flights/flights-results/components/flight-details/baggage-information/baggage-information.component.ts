@@ -4,7 +4,7 @@ import { IBaggageInformation } from 'rp-travel-ui';
 
 @Component({
   selector: 'app-baggage-information',
-  standalone: true,
+  standalone: false,
   templateUrl: './baggage-information.component.html',
   styleUrl: './baggage-information.component.scss',
 })

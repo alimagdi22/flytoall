@@ -3,6 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { IFlightDTO } from 'rp-travel-ui';
 import { SharedService } from '../../../../../../../../shared/shared.service';
 @Component({
+  standalone: false,
   selector: 'app-flight-path',
   templateUrl: './flight-path.component.html',
   styleUrl: './flight-path.component.scss',

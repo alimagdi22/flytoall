@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from '../../../../shared/shared.service';
 
 @Component({
+  standalone: false,
   selector: 'app-why-us',
   templateUrl: './why-us.component.html',
   styleUrl: './why-us.component.scss',

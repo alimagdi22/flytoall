@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, inject, ViewChild } from '@angula
 import { SharedService } from '../../../../shared/shared.service';
 
 @Component({
+  standalone: false,
   selector: 'app-most-popular-airlines',
   templateUrl: './most-popular-airlines.component.html',
   styleUrl: './most-popular-airlines.component.scss',

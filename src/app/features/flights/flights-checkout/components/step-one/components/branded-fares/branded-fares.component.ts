@@ -14,6 +14,7 @@ interface IFareDetails {
 }
 
 @Component({
+  standalone: false,
   selector: 'app-branded-fares',
   templateUrl: './branded-fares.component.html',
   styleUrl: './branded-fares.component.scss',

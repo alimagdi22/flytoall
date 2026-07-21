@@ -7,6 +7,7 @@ import { CountryISO, SearchCountryField } from 'ngx-intl-tel-input-gg';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
+  standalone: false,
   selector: 'app-contact-details',
   templateUrl: './contact-details.component.html',
   styleUrls: ['./contact-details.component.scss'],

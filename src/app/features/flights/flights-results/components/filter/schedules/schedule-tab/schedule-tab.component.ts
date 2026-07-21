@@ -2,6 +2,7 @@ import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { FlightResultService } from 'rp-travel-ui';
 
 @Component({
+  standalone: false,
   selector: 'app-schedule-tab',
   templateUrl: './schedule-tab.component.html',
   styleUrl: './schedule-tab.component.scss',

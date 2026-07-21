@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { IScheduleOption } from '../../../../../../../shared/models/scheduleOption.model';
 import { SCHEDULE_OPTION_DEFAULT } from '../../../../../../../core/constants/default/schedule-option.default';
 @Component({
+  standalone: false,
   selector: 'app-schedule-option',
   templateUrl: './schedule-option.component.html',
   styleUrl: './schedule-option.component.scss',

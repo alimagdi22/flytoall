@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IMainButton } from '../../models/flights/mainButton.model';
 
 @Component({
+  standalone: false,
   selector: 'app-main-button',
   templateUrl: './main-button.component.html',
   styleUrl: './main-button.component.scss',

@@ -4,6 +4,7 @@ import { FlightResultService, IPassengerFareBreakDownDTO, PassengerFareBreakDown
 import { SharedService } from '../../../../../../../shared/shared.service';
 
 @Component({
+  standalone: false,
   selector: 'app-branded-fare-rules',
   templateUrl: './branded-fare-rules.component.html',
   styleUrl: './branded-fare-rules.component.scss',

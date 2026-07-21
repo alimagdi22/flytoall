@@ -4,6 +4,7 @@ import { MostSearchedFlightsResponse } from '../interfaces';
 import { MostSearchedFlightsService } from '../most-searched-flights.service';
 
 @Component({
+  standalone: false,
   selector: 'app-most-searched-flights-card',
   templateUrl: './most-searched-flights-card.component.html',
   styleUrl: './most-searched-flights-card.component.scss',

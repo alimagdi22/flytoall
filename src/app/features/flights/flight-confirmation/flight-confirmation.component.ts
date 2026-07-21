@@ -4,6 +4,7 @@ import { ConfirmationService } from 'rp-travel-ui';
 import { GoogleTagManagerService } from 'angular-google-tag-manager';
 
 @Component({
+  standalone: false,
   selector: 'app-flight-confirmation',
   templateUrl: './flight-confirmation.component.html',
   styleUrl: './flight-confirmation.component.scss',

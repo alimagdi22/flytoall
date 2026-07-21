@@ -9,6 +9,7 @@ type flightType =
   | 'goingFlightScheduleArrival'
   | 'returnFlightScheduleArrival';
 @Component({
+  standalone: false,
   selector: 'app-schedules',
   templateUrl: './schedules.component.html',
   styleUrl: './schedules.component.scss',

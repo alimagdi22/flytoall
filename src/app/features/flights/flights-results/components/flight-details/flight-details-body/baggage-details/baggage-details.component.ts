@@ -4,6 +4,7 @@ import { SharedService } from '../../../../../../../shared/shared.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'app-baggage-details',
   templateUrl: './baggage-details.component.html',
   styleUrl: './baggage-details.component.scss',

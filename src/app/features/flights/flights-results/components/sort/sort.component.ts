@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from '../../../../../shared/shared.service';
 
 @Component({
+  standalone: false,
   selector: 'app-sort',
   templateUrl: './sort.component.html',
   styleUrl: './sort.component.scss',

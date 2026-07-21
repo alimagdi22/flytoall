@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 import { SharedService } from '../../../../../../../shared/shared.service';
 @Component({
+  standalone: false,
   selector: 'app-fare-breakdown',
   templateUrl: './fare-breakdown.component.html',
   styleUrl: './fare-breakdown.component.scss',

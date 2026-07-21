@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FlightResultService } from 'rp-travel-ui';
 
 @Component({
+  standalone: false,
   selector: 'app-stops-filter',
   templateUrl: './stops-filter.component.html',
   styleUrl: './stops-filter.component.scss',

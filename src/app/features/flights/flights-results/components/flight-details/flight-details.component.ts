@@ -7,6 +7,7 @@ import { FlightSharedService } from '../../../../../core/services/flightShared.s
 import { SharedService } from '../../../../../shared/shared.service';
 
 @Component({
+  standalone: false,
   selector: 'app-flight-details',
   templateUrl: './flight-details.component.html',
   styleUrl: './flight-details.component.scss',

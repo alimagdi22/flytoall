@@ -14,6 +14,7 @@ interface IFareDetails {
 }
 
 @Component({
+  standalone: false,
   selector: 'app-payment-method',
   templateUrl: './payment-method.component.html',
   styleUrl: './payment-method.component.scss',

@@ -4,6 +4,7 @@ import { FlightResultService } from 'rp-travel-ui';
 import { FlightSharedService } from '../../../../../core/services/flightShared.service';
 
 @Component({
+  standalone: false,
   selector: 'app-filter',
   templateUrl: './filter.component.html',
   styleUrl: './filter.component.scss',

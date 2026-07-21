@@ -35,6 +35,7 @@ import { CountrySelectionModalComponent } from './country-selection-modal/countr
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
+  standalone: false,
   selector: 'app-travellers-details',
   templateUrl: './travellers-details.component.html',
   styleUrls: ['./travellers-details.component.scss'],

@@ -2,6 +2,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { Component } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-side-nav-content',
   templateUrl: './side-nav-content.component.html',
   styleUrls: ['./side-nav-content.component.scss'],
