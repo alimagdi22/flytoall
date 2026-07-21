@@ -1,8 +1,10 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
-import { HomePageApiService } from 'rp-travel-ui'; // Assuming you have a service for terms
+import { HomePageApiService } from 'rp-travel-ui';
 import { Subscription } from 'rxjs';
+import { SeoService } from '../../../../core/services/seo.service';
+import { SEO_METADATA } from '../../../../core/constants/seo-metadata.config';
 
 @Component({
   selector: 'app-terms',
@@ -15,6 +17,8 @@ export class TermsComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
   translate = inject(TranslateService);
   homePageApiService = inject(HomePageApiService);
+  private seoService = inject(SeoService);
+
   isLoading: boolean = true;
   hasError: boolean = false;
   errorMessage: string = '';
@@ -23,6 +27,7 @@ export class TermsComponent implements OnInit, OnDestroy {
   termsContentAr: string = '';
 
   ngOnInit(): void {
+    this.seoService.updateSeo(SEO_METADATA['terms']);
     this.loadTermsContent();
     this.subscription.add(
       this.translate.onLangChange.subscribe(() => {

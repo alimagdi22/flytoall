@@ -3,6 +3,8 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { HomePageApiService } from 'rp-travel-ui';
 import { Subscription } from 'rxjs';
+import { SeoService } from '../../../../core/services/seo.service';
+import { SEO_METADATA } from '../../../../core/constants/seo-metadata.config';
 
 @Component({
   selector: 'app-privacy-policy',
@@ -15,6 +17,8 @@ export class PrivacyPolicyComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
   translate = inject(TranslateService);
   homePageApiService = inject(HomePageApiService);
+  private seoService = inject(SeoService);
+
   isLoading: boolean = true;
   hasError: boolean = false;
   errorMessage: string = '';
@@ -23,6 +27,7 @@ export class PrivacyPolicyComponent implements OnInit, OnDestroy {
   policyContentAr: string = '';
 
   ngOnInit(): void {
+    this.seoService.updateSeo(SEO_METADATA['privacyPolicy']);
     this.loadPrivacyPolicy();
     this.subscription.add(
       this.translate.onLangChange.subscribe(() => {

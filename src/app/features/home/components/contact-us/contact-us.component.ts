@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -6,6 +6,8 @@ import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import { ContactUsService } from './services/contact-us.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SeoService } from '../../../../core/services/seo.service';
+import { SEO_METADATA } from '../../../../core/constants/seo-metadata.config';
 
 @Component({
   selector: 'app-contact-us',
@@ -14,13 +16,15 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   templateUrl: './contact-us.component.html',
   styleUrl: './contact-us.component.scss',
 })
-export class ContactUsComponent {
+export class ContactUsComponent implements OnInit {
   subscription = new Subscription();
   translate = inject(TranslateService);
   contactUsService = inject(ContactUsService);
   router = inject(Router);
+  private seoService = inject(SeoService);
 
   ngOnInit() {
+    this.seoService.updateSeo(SEO_METADATA['contactUs']);
     this.contactUsService.initContactUsForm();
 
     this.subscription.add(

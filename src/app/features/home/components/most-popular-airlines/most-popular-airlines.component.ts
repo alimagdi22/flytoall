@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, PLATFORM_ID, ViewChild } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { SharedService } from '../../../../shared/shared.service';
 
 @Component({
@@ -17,15 +18,18 @@ export class MostPopularAirlinesComponent implements AfterViewInit {
     'assets/images/popular-airlines/ey.png',
   ];
   public sharedService = inject(SharedService);
+  private platformId = inject(PLATFORM_ID);
+  private isBrowser = isPlatformBrowser(this.platformId);
 
   @ViewChild('swiperEl', { static: false }) swiperEl!: ElementRef;
 
   ngAfterViewInit(): void {
+    if (!this.isBrowser || !this.swiperEl) return;
     const swiper = this.swiperEl.nativeElement;
-    const isWideScreen = window.innerWidth > this.sharedService.webViewBreakPoint;
+    if (!swiper) return;
 
     Object.assign(swiper, {
-      slidesPerView: 2, // Default value
+      slidesPerView: 2,
       spaceBetween: 20,
       pagination: { bulletClass: 'hide' },
       breakpoints: {

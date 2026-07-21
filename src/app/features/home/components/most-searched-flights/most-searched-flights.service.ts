@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { catchError, retry, take } from 'rxjs';
 import { MostSearchedFlightsResponse, SearchCriteria } from './interfaces';
 import { Router } from '@angular/router';
@@ -22,19 +23,20 @@ export class MostSearchedFlightsService {
   private router = inject(Router);
   private flightSearchService = inject(FlightSearchService);
   private sharedService = inject(SharedService);
+  private platformId = inject(PLATFORM_ID);
+  private isBrowser = isPlatformBrowser(this.platformId);
 
   getMostSearchedFlights() {
     this.isLoading = true;
 
-    const mostSearchedFlights = sessionStorage.getItem('mostSearchedFlights');
-
-    if (mostSearchedFlights) {
-      this._mostSearchedFlights = JSON.parse(mostSearchedFlights);
-
-      this.isLoading = false;
-      this.isEmpty = !this._mostSearchedFlights.length;
-
-      return;
+    if (this.isBrowser) {
+      const mostSearchedFlights = sessionStorage.getItem('mostSearchedFlights');
+      if (mostSearchedFlights) {
+        this._mostSearchedFlights = JSON.parse(mostSearchedFlights);
+        this.isLoading = false;
+        this.isEmpty = !this._mostSearchedFlights.length;
+        return;
+      }
     }
 
     this.http
@@ -49,8 +51,9 @@ export class MostSearchedFlightsService {
       )
       .subscribe({
         next: (res) => {
-          sessionStorage.setItem('mostSearchedFlights', JSON.stringify(res));
-
+          if (this.isBrowser) {
+            sessionStorage.setItem('mostSearchedFlights', JSON.stringify(res));
+          }
           this._mostSearchedFlights = res;
           this.isEmpty = !res.length;
           this.isLoading = false;
@@ -63,7 +66,9 @@ export class MostSearchedFlightsService {
   }
 
   goToSearchResults(searchCriteria: SearchCriteria) {
-    localStorage.removeItem('form');
+    if (this.isBrowser) {
+      localStorage.removeItem('form');
+    }
     this.translate.use(searchCriteria.language || '');
     this.homePageService.getCountries(searchCriteria.language || '');
     this.sharedService.isFirstRequest = false;
@@ -152,10 +157,6 @@ export class MostSearchedFlightsService {
       departing.push(e.departingAirport);
       landing.push(e.arrivingAirport);
     });
-
-    // localStorage.setItem('form', JSON.stringify(form));
-    // localStorage.setItem('departing', JSON.stringify(departing));
-    // localStorage.setItem('landing', JSON.stringify(landing));
 
     this.router.navigate(
       [

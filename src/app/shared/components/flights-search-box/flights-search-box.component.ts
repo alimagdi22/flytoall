@@ -1,5 +1,5 @@
-import { SlicePipe } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, inject, Input, OnInit, ViewChild } from '@angular/core';
+import { SlicePipe, isPlatformBrowser } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, inject, Input, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { AbstractControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -51,33 +51,35 @@ export class FlightsSearchBoxComponent implements OnInit, AfterViewInit {
   public destinationType: string = 'Airport_Airport';
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private platformId = inject(PLATFORM_ID);
+  private isBrowser = isPlatformBrowser(this.platformId);
   private resultParams: IResultLink | null = null;
+
   ngOnInit(): void {
-    let form = JSON.parse(localStorage.getItem('form') as string);
+    let form = this.isBrowser ? JSON.parse(localStorage.getItem('form') as string) : null;
 
     if (form) {
-      let cityPattern = form.Flights[0].departing;
+      let cityPattern = form.Flights?.[0]?.departing;
       let pattern = /,/;
 
-      if (!pattern.test(cityPattern)) {
+      if (cityPattern && !pattern.test(cityPattern) && this.isBrowser) {
         localStorage.removeItem('form');
+        form = null;
       }
-    } else {
-      this.flightSearchService.searchFlight.get('flightType')?.setValue('RoundTrip');
+    }
+
+    if (!form) {
+      this.flightSearchService.searchFlight?.get('flightType')?.setValue('RoundTrip');
     }
 
     this.flightSearchService.initSearchForm(form);
-    this.restoreDestinationTypeFromCache();
-
-    if (
-      form &&
-      this.sharedService.isSegmentPresent(['flights-results']) &&
-      !this.sharedService.isSegmentPresent(['cheapestFlights'])
-    ) {
-      // this.onSubmit();
+    if (this.isBrowser) {
+      this.restoreDestinationTypeFromCache();
     }
   }
+
   private restoreDestinationTypeFromCache() {
+    if (!this.isBrowser) return;
     const departingSelections = JSON.parse(localStorage.getItem('departing') ?? '[]');
     const landingSelections = JSON.parse(localStorage.getItem('landing') ?? '[]');
 
@@ -104,6 +106,7 @@ export class FlightsSearchBoxComponent implements OnInit, AfterViewInit {
 
     return selection._isCitySelection ? 'City' : 'Airport';
   }
+
   updateDestinationType(event: { dest: 'departing' | 'landing'; type: 'City' | 'Airport' }) {
     if (event.dest === 'departing') {
       this.departingType = event.type;
@@ -111,23 +114,24 @@ export class FlightsSearchBoxComponent implements OnInit, AfterViewInit {
       this.landingType = event.type;
     }
 
-    // Combine when both have values
     if (this.departingType && this.landingType) {
       this.destinationType = `${this.departingType}_${this.landingType}`;
-      this.sharedService.destinationType = this.destinationType; // Update shared service
+      this.sharedService.destinationType = this.destinationType;
     }
   }
+
   ngAfterViewInit(): void {
+    if (!this.isBrowser) return;
     setTimeout(() => {
-      switch (this.flightSearchService.searchFlight.get('flightType')?.value) {
+      switch (this.flightSearchService.searchFlight?.get('flightType')?.value) {
         case 'OneWay':
-          this.onewayRadioInput.nativeElement.click();
+          this.onewayRadioInput?.nativeElement?.click();
           break;
         case 'RoundTrip':
-          this.roundtripRadioInput.nativeElement.click();
+          this.roundtripRadioInput?.nativeElement?.click();
           break;
         case 'MultiCity':
-          this.multicityRadioInput.nativeElement.click();
+          this.multicityRadioInput?.nativeElement?.click();
           break;
       }
     }, 0);
@@ -138,25 +142,29 @@ export class FlightsSearchBoxComponent implements OnInit, AfterViewInit {
     item.markAllAsTouched();
     this.flightSharedService.switchDestinations.next();
 
-    const landing = localStorage.getItem('landing');
-    const departing = localStorage.getItem('departing');
+    if (this.isBrowser) {
+      const landing = localStorage.getItem('landing');
+      const departing = localStorage.getItem('departing');
 
-    localStorage.setItem('departing', landing ?? '');
-    localStorage.setItem('landing', departing ?? '');
+      localStorage.setItem('departing', landing ?? '');
+      localStorage.setItem('landing', departing ?? '');
+    }
   }
 
   goToRoundTrip() {
-    this.roundtripRadioInput.nativeElement.click();
+    if (this.isBrowser) {
+      this.roundtripRadioInput?.nativeElement?.click();
+    }
     this.isAddReturnSelected = true;
   }
 
   onSubmit() {
-    this.flightSearchService.flightsArray.at(0).markAllAsTouched();
-    this.flightSearchService.searchFlight.get('returnDate')?.markAsTouched();
+    this.flightSearchService.flightsArray?.at(0)?.markAllAsTouched();
+    this.flightSearchService.searchFlight?.get('returnDate')?.markAsTouched();
     this.isSelectButtonLoading = true;
 
     const lang = this.translate.currentLang;
-    const currency = this.homePageService.selectedCurrency.Currency_Code;
+    const currency = this.homePageService.selectedCurrency?.Currency_Code || 'EGP';
     const resultLink = this.flightSearchService.onSubmit(
       lang,
       currency,
@@ -168,24 +176,10 @@ export class FlightsSearchBoxComponent implements OnInit, AfterViewInit {
     let splittedLink = resultLink.toString().split('/');
 
     if (typeof resultLink == 'object') {
-      Object.entries(resultLink).forEach(([key, value], index) => {
-        if (lang == 'en') {
-          if (value.enMsg != '') {
-            // this.tinyAlert(value.enMsg);
-          }
-        } else {
-          if (value.arMsg != '') {
-            // this.tinyAlert(value.arMsg);
-          }
-        }
-      });
-      this.flightSearchService.searchFlight.updateValueAndValidity();
+      this.flightSearchService.searchFlight?.updateValueAndValidity();
       this.isSelectButtonLoading = false;
     } else if (typeof resultLink == 'string' && resultLink != '') {
-      // set land city from share service
-      this.resultParams?.language;
-
-      if (this.flightSearchService.searchFlight.valid) {
+      if (this.flightSearchService.searchFlight?.valid) {
         this.resultParams = {
           language: splittedLink[0],
           currency: splittedLink[1],
@@ -199,43 +193,48 @@ export class FlightsSearchBoxComponent implements OnInit, AfterViewInit {
           destinationType: splittedLink[9],
         };
 
-        // this.sharedService.scrollToTop();
         this.router.navigate(['flights-results', ...splittedLink]).then(() => {
           this.isSelectButtonLoading = false;
         }).catch(() => {
           this.isSelectButtonLoading = false;
         });
-        localStorage.setItem('form', JSON.stringify(this.flightSearchService.searchFlight.value));
+        if (this.isBrowser) {
+          localStorage.setItem('form', JSON.stringify(this.flightSearchService.searchFlight?.value));
+        }
       } else {
-        this.flightSearchService.searchFlight.markAllAsTouched();
-        this.flightSearchService.searchFlight.get('returnDate')?.markAsTouched();
+        this.flightSearchService.searchFlight?.markAllAsTouched();
+        this.flightSearchService.searchFlight?.get('returnDate')?.markAsTouched();
         this.isSelectButtonLoading = false;
       }
     }
   }
 
   onAddFlight() {
-    let landingAirports = JSON.parse(localStorage.getItem('landing') ?? '[]');
-    let airport = landingAirports[this.flightSearchService.flightsArray['controls'].length - 1];
+    if (this.isBrowser) {
+      let landingAirports = JSON.parse(localStorage.getItem('landing') ?? '[]');
+      let airport = landingAirports[this.flightSearchService.flightsArray?.['controls']?.length - 1];
 
-    if (airport) {
-      let departionAirports = JSON.parse(localStorage.getItem('departing') ?? '[]');
-      departionAirports[this.flightSearchService.flightsArray['controls'].length] = airport;
-      localStorage.setItem('departing', JSON.stringify(departionAirports));
+      if (airport) {
+        let departionAirports = JSON.parse(localStorage.getItem('departing') ?? '[]');
+        departionAirports[this.flightSearchService.flightsArray?.['controls']?.length] = airport;
+        localStorage.setItem('departing', JSON.stringify(departionAirports));
+      }
     }
 
     this.flightSearchService.addFlight();
   }
 
   onRemoveFlight(index: number) {
-    let departionAirports = JSON.parse(localStorage.getItem('departing') ?? '[]');
-    let landingAirports = JSON.parse(localStorage.getItem('landing') ?? '[]');
+    if (this.isBrowser) {
+      let departionAirports = JSON.parse(localStorage.getItem('departing') ?? '[]');
+      let landingAirports = JSON.parse(localStorage.getItem('landing') ?? '[]');
 
-    departionAirports[index] = null;
-    landingAirports[index] = null;
+      departionAirports[index] = null;
+      landingAirports[index] = null;
 
-    localStorage.setItem('departing', JSON.stringify(departionAirports));
-    localStorage.setItem('landing', JSON.stringify(landingAirports));
+      localStorage.setItem('departing', JSON.stringify(departionAirports));
+      localStorage.setItem('landing', JSON.stringify(landingAirports));
+    }
 
     this.flightSearchService.removeFlight(index);
   }

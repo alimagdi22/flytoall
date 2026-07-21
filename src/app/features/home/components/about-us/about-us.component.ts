@@ -3,6 +3,8 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { HomePageApiService } from 'rp-travel-ui';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { SeoService } from '../../../../core/services/seo.service';
+import { SEO_METADATA } from '../../../../core/constants/seo-metadata.config';
 
 @Component({
   selector: 'app-about-us',
@@ -16,6 +18,8 @@ export class AboutUsComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
   homePageApiService = inject(HomePageApiService);
   translate = inject(TranslateService);
+  private seoService = inject(SeoService);
+
   isLoading: boolean = true;
   hasError: boolean = false;
   errorMessage: string = '';
@@ -24,6 +28,7 @@ export class AboutUsComponent implements OnInit, OnDestroy {
   cmsContentAr: string = '';
 
   ngOnInit(): void {
+    this.seoService.updateSeo(SEO_METADATA['aboutUs']);
     this.loadAboutUsContent();
     // Watch for language changes
     this.subscription.add(

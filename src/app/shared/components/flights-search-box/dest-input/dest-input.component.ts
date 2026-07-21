@@ -7,10 +7,12 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  PLATFORM_ID,
   Renderer2,
   TemplateRef,
   ViewChild
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { AbstractControl, FormControl } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -67,6 +69,8 @@ export class DestInputComponent implements OnInit, OnDestroy {
   private renderer = inject(Renderer2);
   private modalService = inject(NgbModal);
   private initialRecommendedAirports = initialRecommendedAirports;
+  private platformId = inject(PLATFORM_ID);
+  public isBrowser = isPlatformBrowser(this.platformId);
 
   ngOnInit(): void {
     this.updateInputValue(this.flightItem.get(this.destination)?.value);
@@ -116,10 +120,10 @@ export class DestInputComponent implements OnInit, OnDestroy {
         }),
     );
 
-    let form = JSON.parse(localStorage.getItem('form') as string);
-    let airports = JSON.parse(localStorage.getItem(this.destination) as string) as (IAirPortTranslated & { _isCitySelection?: boolean })[];
+    let form = this.isBrowser ? JSON.parse(localStorage.getItem('form') as string) : null;
+    let airports = (this.isBrowser ? JSON.parse(localStorage.getItem(this.destination) as string) : null) as (IAirPortTranslated & { _isCitySelection?: boolean })[];
     
-    if (form && airports[this.index]) {
+    if (form && airports && airports[this.index]) {
       const cachedAirport = airports[this.index];
       
       if (cachedAirport._isCitySelection) {
@@ -129,10 +133,6 @@ export class DestInputComponent implements OnInit, OnDestroy {
         this.updateInputValue(displayValue);
       } else {
         this.onSelectAirport(this.destination, cachedAirport[this.sharedService.lang]);
-        // const currentValue = this.flightItem.get(this.destination)?.value;
-        // if ((!currentValue || currentValue.trim() === '') && form && airports[this.index]) {
-        //   this.onSelectAirport(this.destination, airports[this.index][this.sharedService.lang]);
-        // }
       }
     }
   }
@@ -210,6 +210,7 @@ private emitDestinationType(dest: TDestinations, isCity: boolean) {
   }
 
   storageAirport(dest: TDestinations, airport: IAirPortTranslated, isCitySelection: boolean = false) {
+    if (!this.isBrowser) return;
     let airports = JSON.parse(localStorage.getItem(this.destination) ?? '[]');
     // Store both the airport data and whether it was a city selection
     airports[this.index] = {

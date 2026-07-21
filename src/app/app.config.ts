@@ -23,6 +23,7 @@ import { DatePipe } from '@angular/common';
 import { TokenInterceptor } from './core/interceptors/token.interceptor';
 import { DatepickerI18nService } from './core/services/datepicker-i18n.service';
 import { NgbDatepickerConfig, NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
+import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
 registerLocaleData(localeAr);
 
@@ -82,6 +83,6 @@ export const appConfig: ApplicationConfig = {
         return config;
       },
       deps: [TranslateService],
-    },
+    }, provideClientHydration(withEventReplay()),
   ],
 };

@@ -1,4 +1,5 @@
-import { AfterViewInit, Directive, NgZone, OnDestroy, Renderer2 } from '@angular/core';
+import { AfterViewInit, Directive, inject, NgZone, OnDestroy, PLATFORM_ID, Renderer2 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
@@ -9,6 +10,8 @@ import { Subscription } from 'rxjs';
 export class DatepickerRtlDirective implements AfterViewInit, OnDestroy {
   private observer: MutationObserver | null = null;
   private langSub: Subscription | null = null;
+  private platformId = inject(PLATFORM_ID);
+  private isBrowser = isPlatformBrowser(this.platformId);
 
   constructor(
     private renderer: Renderer2,
@@ -17,10 +20,14 @@ export class DatepickerRtlDirective implements AfterViewInit, OnDestroy {
   ) {}
 
   ngAfterViewInit(): void {
+    if (!this.isBrowser) return;
+
     // Run the MutationObserver outside Angular to avoid change detection spam
     this.ngZone.runOutsideAngular(() => {
-      this.observer = new MutationObserver(() => this.applyToPickers());
-      this.observer.observe(document.body, { childList: true, subtree: true });
+      if (typeof MutationObserver !== 'undefined') {
+        this.observer = new MutationObserver(() => this.applyToPickers());
+        this.observer.observe(document.body, { childList: true, subtree: true });
+      }
     });
 
     // apply once in case a picker is already open
@@ -34,6 +41,7 @@ export class DatepickerRtlDirective implements AfterViewInit, OnDestroy {
   }
 
   private applyToPickers() {
+    if (!this.isBrowser || typeof document === 'undefined') return;
     const isAr = this.translate.currentLang === 'ar';
     // select common ng-bootstrap datepicker popup classes
     const selectors = ['.ngb-dp', '.ngb-datepicker', '.ngb-datepicker-popup', '.ngb-datepicker-wrapper'];
@@ -50,7 +58,9 @@ export class DatepickerRtlDirective implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.observer?.disconnect();
-    this.langSub?.unsubscribe();
+    if (this.isBrowser) {
+      this.observer?.disconnect();
+      this.langSub?.unsubscribe();
+    }
   }
 }

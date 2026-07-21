@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, HostListener, inject, OnDestroy, OnInit, TemplateRef, ViewChild, PLATFORM_ID } from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { ActivatedRoute, NavigationEnd, RouterLink } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -26,7 +26,7 @@ import { Router } from '@angular/router';
 import { GoogleAuthService } from '../../../shared/services/auth.service';
 import { DropDownComponent } from './menu-modal/drop-down/drop-down.component';
 import { SignOutAlertModalComponent } from '../../../shared/components/user-management/sign-out-alert-modal/sign-out-alert-modal.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { CURRENCY_DEFAULT } from '../../constants/default/currency.default';
 import { HomeIcon } from './icons/home-icon.component';
 import { PhoneIcon } from './icons/phone-icon.component';
@@ -79,10 +79,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isNotInHome = false;
   authenticated = false;
 
+  private platformId = inject(PLATFORM_ID);
+  public isBrowser = isPlatformBrowser(this.platformId);
+
   ngOnInit(): void {
-    const storedCurrency = sessionStorage.getItem('curr');
+    const storedCurrency = this.isBrowser ? sessionStorage.getItem('curr') : null;
     this.homePageService.getCurrency(storedCurrency || 'EGP');
-    this.homePageService.getPointOfSale();
+    if (this.isBrowser) {
+      this.homePageService.getPointOfSale();
+    }
     if (storedCurrency) {
       this.subscription.add(
         this.homePageService.notify.subscribe(() => {
@@ -159,7 +164,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.googleAuthService.notify.subscribe({
         next: (status) => {
-          if (localStorage.getItem('token')) {
+          if (this.isBrowser && localStorage.getItem('token')) {
             this.authenticated = true;
             this.userProfileService.getUserProfile();
           } else {
@@ -183,7 +188,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }),
     );
 
-    if (localStorage.getItem('token')) {
+    if (this.isBrowser && localStorage.getItem('token')) {
       this.sharedService.isAuthenticated = true;
       this.userProfileService.getUserProfile();
     }
@@ -191,7 +196,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.authService.notify.subscribe({
         next: (status) => {
-          if (localStorage.getItem('token')) {
+          if (this.isBrowser && localStorage.getItem('token')) {
             this.userProfileService.getUserProfile();
             this.sharedService.isAuthenticated = true;
           } else if (status === RESET_PASSWORD_STATUS.success) {
@@ -208,12 +213,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   private setDirection(lang: string) {
-    if (lang === 'ar') {
-      document.documentElement.setAttribute('dir', 'rtl');
-      document.documentElement.setAttribute('lang', 'ar');
-    } else {
-      document.documentElement.setAttribute('dir', 'ltr');
-      document.documentElement.setAttribute('lang', 'en');
+    if (this.isBrowser) {
+      document.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      document.documentElement.setAttribute('lang', lang);
     }
   }
 

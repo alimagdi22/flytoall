@@ -44,7 +44,7 @@ export class SharedService {
   contactForm: any;
   userForm: any;
 
-  screenWidth = 0;
+  screenWidth = 1200;
   webViewBreakPoint = 1180;
 
   loader: boolean = true;
