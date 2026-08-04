@@ -1,3 +1,4 @@
+@use 'sass:map';
 @import 'colors';
 @import 'variables';
 @import 'utilities';
@@ -152,13 +153,13 @@
   margin: 0;
 }
 .red-color {
-  color: map-get($map: $red, $key: 'two');
+  color: map.get($red, 'two');
 }
 .select-btn {
   padding: 10px 24px;
   font-size: 16px;
   font-weight: 700;
-  background-color: map-get($blue, 'one');
+  background-color: map.get($blue, 'one');
   border-radius: 12px;
   border: none;
   width: 186px;
@@ -201,7 +202,7 @@
   align-items: center;
   padding: 15px 25px;
   font-size: 14px;
-  border-top: 1px solid map-get($map: $orange, $key: one);
+  border-top: 1px solid map.get($orange, 'one');
   background-color: #cbcbcb80;
   border-radius: 0 0 10px 10px;
 }
@@ -221,7 +222,7 @@
 }
 
 .details-link:hover {
-  color: map-get($map: $blue, $key: 'one');
+  color: map.get($blue, 'one');
 }
 
 .stop-line-container {
@@ -234,7 +235,7 @@
 .circle {
   width: 10px;
   height: 10px;
-  background-color: map-get($map: $orange, $key: 'one');
+  background-color: map.get($orange, 'one');
   border-radius: 50%;
   z-index: 2;
   flex-shrink: 0;

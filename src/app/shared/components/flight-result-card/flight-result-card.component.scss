@@ -1,3 +1,4 @@
+@use 'sass:map';
 @import 'colors';
 @import 'utilities';
 
@@ -53,7 +54,7 @@
   }
 
   .bag-icon {
-    color: map-get($map: $blue, $key: two);
+    color: map.get($blue, 'two');
   }
 
   .card-text {
@@ -63,7 +64,7 @@
   }
 
   .card .card-body .duration .transit-time {
-    color: map-get($map: $red, $key: one);
+    color: map.get($red, 'one');
   }
 
   // === BUTTON SECTION ===
@@ -86,7 +87,7 @@
   }
 
   .card .btn-section .toggle-btn-open {
-    color: map-get($map: $blue, $key: one);
+    color: map.get($blue, 'one');
   }
   .card .btn-section .toggle-btn-close {
     color: #3e7dc3;
@@ -265,7 +266,7 @@
   .transit-duration {
     margin: auto;
     width: 95%;
-    border: 1px solid map-get($map: $blue, $key: three);
+    border: 1px solid map.get($blue, 'three');
     background-color: #fafafa;
     border-radius: 10px;
     padding: 10px;
@@ -291,7 +292,7 @@
     display: grid;
     grid-template-columns: 1fr;
     border-radius: 0%;
-    border: 1px solid map-get($map: $blue, $key: one);
+    border: 1px solid map.get($blue, 'one');
   }
   .custom-duration {
     margin-bottom: 2px !important;

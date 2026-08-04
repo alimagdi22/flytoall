@@ -5,8 +5,13 @@ import { FlightBookingComponent } from './components/flight-booking/flight-booki
 import { HotelsBookingComponent } from './components/hotels-booking/hotels-booking.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { UserManagementComponent } from './user-management.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 const routes: Routes = [
+  {
+    path: 'reset-password',
+    component: ResetPasswordComponent,
+  },
   {
     path: '',
     component: UserManagementComponent,
@@ -28,6 +33,10 @@ const routes: Routes = [
       {
         path: 'hotels-booking',
         component: HotelsBookingComponent,
+      },
+      {
+        path: 'reset-password',
+        component: ResetPasswordComponent,
       },
     ],
   },

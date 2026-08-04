@@ -9,7 +9,7 @@ import { SEO_METADATA } from '../../../../core/constants/seo-metadata.config';
 @Component({
   selector: 'app-terms',
   standalone: true,
-  imports: [TranslatePipe, CommonModule],
+  imports: [CommonModule],
   templateUrl: './terms.component.html',
   styleUrl: './terms.component.scss',
 })

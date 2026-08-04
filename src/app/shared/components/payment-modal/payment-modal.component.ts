@@ -1,12 +1,11 @@
-import { NgClass } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-payment-modal',
   standalone: true,
-  imports: [NgClass],
+  imports: [],
   templateUrl: './payment-modal.component.html',
   styleUrl: './payment-modal.component.scss',
 })

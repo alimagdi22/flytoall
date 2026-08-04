@@ -16,6 +16,7 @@ import {
   HTTP_INTERCEPTORS,
   HttpClient,
   provideHttpClient,
+  withFetch,
   withInterceptors,
   withInterceptorsFromDi,
 } from '@angular/common/http';
@@ -34,7 +35,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideAnimations(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withInterceptorsFromDi(), withFetch()),
     provideTranslateService({
       loader: {
         provide: TranslateLoader,

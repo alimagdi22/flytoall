@@ -1,3 +1,4 @@
+@use 'sass:map';
 @import 'utilities';
 
 .login {
@@ -115,7 +116,7 @@
       color: white;
       border: 1px solid transparent;
       border-radius: 50px;
-      background-color: map-get($map: $blue, $key: 'one');
+      background-color: map.get($blue, 'one');
       text-align: center;
       text-decoration: none;
       cursor: pointer;
@@ -125,8 +126,8 @@
 
       &:hover {
         background-color: white;
-        border: 1px solid map-get($map: $blue, $key: 'one');
-        color: map-get($map: $blue, $key: 'one');
+        border: 1px solid map.get($blue, 'one');
+        color: map.get($blue, 'one');
       }
 
       &:focus {
@@ -158,7 +159,7 @@
 
     span {
       cursor: pointer;
-      color: map-get($map: $blue, $key: 'one');
+      color: map.get($blue, 'one');
     }
   }
 }

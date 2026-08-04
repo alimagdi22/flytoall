@@ -1,3 +1,4 @@
+@use 'sass:map';
 @import 'colors';
 // img {
 //   width: 88px;
@@ -87,7 +88,7 @@
   .circle {
     width: 10px;
     height: 10px;
-    background-color: map-get($map: $blue, $key: 'one');
+    background-color: map.get($blue, 'one');
     border-radius: 50%;
     z-index: 2;
     flex-shrink: 0;
@@ -117,7 +118,7 @@
     position: absolute;
     top: 3%;
     height: 6px;
-    background-color: map-get($map: $blue, $key: 'one');
+    background-color: map.get($blue, 'one');
     border-radius: 10px;
     z-index: 1;
     transform: translateY(-50%);
@@ -219,7 +220,7 @@
   .circle {
     width: 10px;
     height: 10px;
-    background-color: map-get($map: $blue, $key: 'one');
+    background-color: map.get($blue, 'one');
     border-radius: 50%;
     z-index: 2;
     flex-shrink: 0;
@@ -249,7 +250,7 @@
     position: absolute;
     top: 3%;
     height: 6px;
-    background-color: map-get($map: $blue, $key: 'one');
+    background-color: map.get($blue, 'one');
     border-radius: 10px;
     z-index: 1;
     transform: translateY(-50%);

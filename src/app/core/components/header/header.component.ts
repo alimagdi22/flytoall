@@ -43,9 +43,6 @@ import { PhoneIcon } from './icons/phone-icon.component';
     RouterLink,
     MatMenuModule,
     DropDownComponent,
-    SignOutAlertModalComponent,
-    HomeIcon,
-    PhoneIcon,
     TranslatePipe,
     CommonModule,
   ],
@@ -143,7 +140,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.email = params.get('email') ?? '';
         this.token = params.get('token') ? decodeURIComponent(params.get('token')!) : '';
 
-        if (this.email && this.token) {
+        if (this.isBrowser && this.email && this.token && !this.router.url.includes('reset-password')) {
           this.showModal(this.forgetPasswordTemplate);
           this.authService.verifyResetPasswordToken(this.token, this.email);
         }

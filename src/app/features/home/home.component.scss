@@ -1,3 +1,4 @@
+@use 'sass:map';
 @import 'variables';
 @import 'colors';
 
@@ -12,7 +13,7 @@
   font-weight: 700;
   font-size: 20px;
   line-height: 100%;
-  background-color: map-get($map: $blue, $key: 'one');
+  background-color: map.get($blue, 'one');
   color: white;
   text-align: center;
   padding-bottom: 20px;
@@ -96,7 +97,7 @@
   width: 100%;
   object-fit: cover;
   object-position: 0 30%;
-  background-color: map-get($map: $blue, $key: 'one');
+  background-color: map.get($blue, 'one');
   color: white;
   margin-top: 12rem;
   border-radius: 1rem;

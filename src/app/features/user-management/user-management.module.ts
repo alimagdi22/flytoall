@@ -10,6 +10,8 @@ import { HotelsBookingComponent } from './components/hotels-booking/hotels-booki
 import { FlightCardComponent } from './components/flight-card/flight-card.component';
 import { HotelCardComponent } from './components/hotel-card/hotel-card.component';
 import { TicketsComponent } from './components/flight-card/tickets/tickets.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { SignOutAlertModalComponent } from '../../shared/components/user-management/sign-out-alert-modal/sign-out-alert-modal.component';
 
 @NgModule({
@@ -22,7 +24,8 @@ import { SignOutAlertModalComponent } from '../../shared/components/user-managem
     FlightCardComponent,
     HotelCardComponent,
     TicketsComponent,
+    ResetPasswordComponent,
   ],
-  imports: [CommonModule, UserManagementRoutingModule, SharedModule, SignOutAlertModalComponent],
+  imports: [CommonModule, ReactiveFormsModule, UserManagementRoutingModule, SharedModule, SignOutAlertModalComponent],
 })
 export class UserManagementModule {}

@@ -1,4 +1,4 @@
-import { CommonModule, NgClass } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { IFlight } from 'rp-travel-ui';
@@ -7,7 +7,7 @@ import { DurationFormatPipe } from '../../../pipes/duration-format.pipe';
 @Component({
   selector: 'app-flight-result-card-stops',
   standalone: true,
-  imports: [NgClass, CommonModule, TranslateModule, DurationFormatPipe],
+  imports: [CommonModule, TranslateModule, DurationFormatPipe],
   templateUrl: './flight-result-card-stops.component.html',
   styleUrl: './flight-result-card-stops.component.scss',
 })

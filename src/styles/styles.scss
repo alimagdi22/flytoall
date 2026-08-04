@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use '@angular/material' as mat;
 @import url(https://db.onlinewebfonts.com/c/20222942acebb6ad63faf55842260d87?family=Silka+Regular);
 @import './variables.scss';
@@ -181,26 +182,26 @@ ngx-intl-tel-input {
   }
 
   .custom-day.focused {
-    background-color: map-get($map: $blue, $key: 'one');
+    background-color: map.get($blue, 'one');
     color: white;
   }
 
   .custom-day:hover {
-    background-color: map-get($map: $blue, $key: 'one');
+    background-color: map.get($blue, 'one');
     color: white;
   }
 
   .custom-day.faded {
-    background-color: map-get($map: $red, $key: 'one');
+    background-color: map.get($red, 'one');
     color: #000000;
   }
   .custom-day.range {
-    background-color: map-get($map: $blue, $key: 'one');
+    background-color: map.get($blue, 'one');
     color: white;
   }
   .custom-day.range,
   .custom-day.focused-range {
-    background-color: map-get($map: $blue, $key: 'one');
+    background-color: map.get($blue, 'one');
     color: white;
   }
 }
@@ -350,17 +351,17 @@ $custom-theme: mat.m2-define-light-theme(
 
 mat-checkbox,
 mat-checkbox.mat-primary {
-  --mdc-checkbox-selected-icon-color: #{map-get($blue, 'one')} !important;
-  --mdc-checkbox-selected-focus-icon-color: #{map-get($blue, 'one')} !important;
-  --mdc-checkbox-selected-hover-icon-color: #{map-get($blue, 'one')} !important;
-  --mdc-checkbox-selected-pressed-icon-color: #{map-get($blue, 'one')} !important;
-  --mat-mdc-checkbox-selected-focus-state-layer-color: #{map-get($blue, 'one')} !important;
-  --mat-mdc-checkbox-selected-hover-state-layer-color: #{map-get($blue, 'one')} !important;
-  --mat-mdc-checkbox-selected-pressed-state-layer-color: #{map-get($blue, 'one')} !important;
+  --mdc-checkbox-selected-icon-color: #{map.get($blue, 'one')} !important;
+  --mdc-checkbox-selected-focus-icon-color: #{map.get($blue, 'one')} !important;
+  --mdc-checkbox-selected-hover-icon-color: #{map.get($blue, 'one')} !important;
+  --mdc-checkbox-selected-pressed-icon-color: #{map.get($blue, 'one')} !important;
+  --mat-mdc-checkbox-selected-focus-state-layer-color: #{map.get($blue, 'one')} !important;
+  --mat-mdc-checkbox-selected-hover-state-layer-color: #{map.get($blue, 'one')} !important;
+  --mat-mdc-checkbox-selected-pressed-state-layer-color: #{map.get($blue, 'one')} !important;
   --mdc-checkbox-selected-checkmark-color: #ffffff !important;
-  --mat-mdc-checkbox-ripple-color: #{map-get($blue, 'one')} !important;
-  --mdc-checkbox-unselected-focus-outline-color: #{map-get($blue, 'one')} !important;
-  --mdc-checkbox-unselected-hover-outline-color: #{map-get($blue, 'one')} !important;
-  --mdc-checkbox-unselected-icon-color: #{map-get($blue, 'one')} !important;
-  --mdc-checkbox-unselected-pressed-outline-color: #{map-get($blue, 'one')} !important;
+  --mat-mdc-checkbox-ripple-color: #{map.get($blue, 'one')} !important;
+  --mdc-checkbox-unselected-focus-outline-color: #{map.get($blue, 'one')} !important;
+  --mdc-checkbox-unselected-hover-outline-color: #{map.get($blue, 'one')} !important;
+  --mdc-checkbox-unselected-icon-color: #{map.get($blue, 'one')} !important;
+  --mdc-checkbox-unselected-pressed-outline-color: #{map.get($blue, 'one')} !important;
 }

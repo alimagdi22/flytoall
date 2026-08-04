@@ -1,3 +1,4 @@
+@use 'sass:map';
 @import 'colors';
 
 /* Mixins */
@@ -94,6 +95,15 @@
     margin-bottom: 4px;
   }
 
+  
+  span {
+    font-size: 12px;
+    color: #000;
+    margin-bottom: 4px;
+  }
+
+
+
   .input-box {
     input,
     & {
@@ -156,7 +166,7 @@
 .flight-details-btn {
   background-color: white;
   outline: none;
-  color: map-get($map: $blue, $key: 'one');
+  color: map.get($blue, 'one');
   font-weight: 500;
   border: 1px solid;
   border-top: 0;
@@ -176,7 +186,7 @@
     left: 50px;
   }
   border-radius: 10px;
-  border: 1px solid map-get($map: $blue, $key: 'one');
+  border: 1px solid map.get($blue, 'one');
   width: 33px;
   height: 33px;
 
@@ -203,7 +213,7 @@
 }
 
 p.validation-msg {
-  color: map-get($map: $red, $key: 'one');
+  color: map.get($red, 'one');
   font-size: 12px;
   font-weight: 300;
   text-align: start;
@@ -211,7 +221,7 @@ p.validation-msg {
 }
 
 .not-valid-input {
-  border: 1px solid map-get($map: $red, $key: 'one');
+  border: 1px solid map.get($red, 'one');
 }
 
 @keyframes fadeIn {

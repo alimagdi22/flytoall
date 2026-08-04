@@ -1,7 +1,8 @@
+@use 'sass:map';
 @import 'colors';
 
 header {
-  background-color: map-get($map: $blue, $key: 'one');
+  background-color: map.get($blue, 'one');
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -13,7 +14,7 @@ header {
   }
 
   button {
-    background-color: map-get($map: $green, $key: 'one');
+    background-color: map.get($green, 'one');
     color: white;
     font-size: 16px;
     border-radius: 10px;
@@ -63,7 +64,7 @@ header {
       background-color: transparent !important;
 
       &:focus {
-        border-color: map-get($map: $blue, $key: 'one') !important;
+        border-color: map.get($blue, 'one') !important;
         box-shadow: 0 0 5px rgba(0, 128, 0, 0.2);
       }
     }
@@ -87,7 +88,7 @@ header {
     color: white;
     border: 1px solid transparent;
     border-radius: 50px;
-    background-color: map-get($map: $blue, $key: 'one');
+    background-color: map.get($blue, 'one');
     text-align: center;
     text-decoration: none;
     cursor: pointer;
@@ -97,8 +98,8 @@ header {
 
     &:hover {
       background-color: white;
-      border: 1px solid map-get($map: $blue, $key: 'one');
-      color: map-get($map: $blue, $key: 'one');
+      border: 1px solid map.get($blue, 'one');
+      color: map.get($blue, 'one');
     }
 
     &:focus {
@@ -136,7 +137,7 @@ header {
   }
 
   .validation-msg {
-    color: map-get($map: $red, $key: 'one');
+    color: map.get($red, 'one');
     font-size: 12px;
     font-weight: 300;
     text-align: center;
@@ -144,7 +145,7 @@ header {
   }
 
   .success-msg {
-    color: map-get($map: $green, $key: 'one');
+    color: map.get($green, 'one');
     font-size: 12px;
     font-weight: bold;
     text-align: center;

@@ -9,7 +9,7 @@ import { SEO_METADATA } from '../../../../core/constants/seo-metadata.config';
 @Component({
   selector: 'app-privacy-policy',
   standalone: true,
-  imports: [TranslatePipe, CommonModule],
+  imports: [CommonModule],
   templateUrl: './privacy-policy.component.html',
   styleUrl: './privacy-policy.component.scss',
 })
