@@ -90,8 +90,6 @@ export class FlightsCheckoutComponent implements OnInit, OnDestroy {
     const searchCriteria =
       this.flightCheckoutService.selectedFlight?.searchCriteria || this.selectedFlight?.searchCriteria;
 
-    console.log('goBackToResultsPage triggered', { searchCriteria });
-
     if (!searchCriteria) {
       console.error('No search criteria found for navigation');
       return;

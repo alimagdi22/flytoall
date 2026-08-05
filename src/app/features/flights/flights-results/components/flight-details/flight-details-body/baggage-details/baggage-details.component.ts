@@ -100,8 +100,6 @@ export class BaggageDetailsComponent {
   }
 
   adultBaggage() {
-    console.log('Baggage Info:', this.flightResultService?.baggageInfo);
-
     const baggage = this.baggageInfo.baggage.split(' ');
     if (baggage[1] === 'Kilograms') {
       return Math.floor(parseInt(baggage[0]) / 7);

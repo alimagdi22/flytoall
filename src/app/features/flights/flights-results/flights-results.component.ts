@@ -1,5 +1,5 @@
-import { Location } from '@angular/common';
-import { Component, ElementRef, HostListener, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Location, isPlatformBrowser } from '@angular/common';
+import { Component, ElementRef, HostListener, inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { FlightResultService, IAirItinerary } from 'rp-travel-ui';
@@ -16,6 +16,9 @@ import { SharedService } from '../../../shared/shared.service';
 export class FlightsResultsComponent implements OnInit, OnDestroy {
   constructor(private location: Location) {}
   @ViewChild('filterComponent') filterComponent!: ElementRef;
+
+  private platformId = inject(PLATFORM_ID);
+  public isBrowser = isPlatformBrowser(this.platformId);
 
   flightResultService = inject(FlightResultService);
   details: IAirItinerary[] = [];
@@ -67,9 +70,9 @@ export class FlightsResultsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription.add(
       this.route.params.subscribe((params: Params) => {
-        console.log(params, 'params');
-        console.log(this.sharedService.isFirstRequest, 'isFirstRequest');
-        console.log(localStorage.getItem('form'), 'form');
+        if (this.isBrowser) {
+          console.log(localStorage.getItem('form'), 'form');
+        }
 
         // if (this.sharedService.isFirstRequest && localStorage.getItem('form')) {
         //   this.sharedService.isFirstRequest = false;
@@ -119,8 +122,6 @@ export class FlightsResultsComponent implements OnInit, OnDestroy {
           if (!this.flightResultService.orgnizedResponce.length || !this.flightResultService.orgnizedResponce[0]?.length) {
             return;
           }
-          console.log(this.flightResultService.response, 'res');
-
           for (let i = 0; i < this.sortItems.length; i++) {
             this.flightResultService.sortMyResult(i + 1);
 
@@ -138,22 +139,26 @@ export class FlightsResultsComponent implements OnInit, OnDestroy {
             this.sortItems[0].currency = firstItinDefault.itinTotalFare.currencyCode;
           }
 
-          setTimeout(() => {
-            this.filterHeight = this.filterComponent?.nativeElement.offsetHeight;
-            this.screenHeight = window.innerHeight;
-          }, 1000);
+          if (this.isBrowser) {
+            setTimeout(() => {
+              this.filterHeight = this.filterComponent?.nativeElement.offsetHeight;
+              this.screenHeight = window.innerHeight;
+            }, 1000);
 
-          setTimeout(() => {
-            this.isSessionExpired = true;
-          }, 1200000);
+            setTimeout(() => {
+              this.isSessionExpired = true;
+            }, 1200000);
+          }
 
           // Push GTM event when results are loaded
-          this.gtmService.pushTag({
-            event: 'search_results_view',
-            page: 'flights-results',
-            searchId: this.searchId,
-            timestamp: new Date().toISOString(),
-          });
+          if (this.isBrowser) {
+            this.gtmService.pushTag({
+              event: 'search_results_view',
+              page: 'flights-results',
+              searchId: this.searchId,
+              timestamp: new Date().toISOString(),
+            });
+          }
         },
       }),
     );
@@ -194,18 +199,20 @@ export class FlightsResultsComponent implements OnInit, OnDestroy {
       }),
     );
 
-    this.subscription.add(
-      fromEvent(document, 'visibilitychange')
-        .pipe(
-          map(() => !document.hidden),
-          startWith(!document.hidden),
-        )
-        .subscribe({
-          next: (isVisible) => {
-            if (isVisible && this.isSessionExpired) location.reload();
-          },
-        }),
-    );
+    if (this.isBrowser) {
+      this.subscription.add(
+        fromEvent(document, 'visibilitychange')
+          .pipe(
+            map(() => !document.hidden),
+            startWith(!document.hidden),
+          )
+          .subscribe({
+            next: (isVisible) => {
+              if (isVisible && this.isSessionExpired) location.reload();
+            },
+          }),
+      );
+    }
   }
 
   ngAfterViewInit(): void {

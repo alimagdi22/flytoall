@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, ElementRef, inject, ViewChild, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, ViewChild, OnDestroy, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { FlightResultService } from 'rp-travel-ui';
 import { Subscription } from 'rxjs';
 import { ISortItem } from '../../../../../shared/models/sortItem.model';
@@ -19,6 +20,9 @@ export class HeadComponent implements AfterViewInit, OnDestroy {
   @ViewChild('desktopSwiper') desktopSwiperRef!: ElementRef;
   @ViewChild('swiperEl', { static: false }) swiperEl!: ElementRef;
   desktopSwiper?: Swiper;
+
+  private platformId = inject(PLATFORM_ID);
+  public isBrowser = isPlatformBrowser(this.platformId);
 
   load: boolean = true;
   flightResultService = inject(FlightResultService);
@@ -65,7 +69,9 @@ export class HeadComponent implements AfterViewInit, OnDestroy {
           }
         };
 
-        retryUntilDataLoaded();
+        if (this.isBrowser) {
+          retryUntilDataLoaded();
+        }
       }),
     );
 
@@ -85,12 +91,18 @@ export class HeadComponent implements AfterViewInit, OnDestroy {
       }),
     );
 
-    setTimeout(() => {
+    if (this.isBrowser) {
+      setTimeout(() => {
+        this.load = false;
+      }, 7000);
+    } else {
       this.load = false;
-    }, 7000);
+    }
   }
 
   ngAfterViewInit(): void {
+    if (!this.isBrowser) return;
+
     if (this.sharedService.screenWidth >= this.sharedService.webViewBreakPoint) {
       this.initDesktopSwiper();
     }
@@ -125,7 +137,6 @@ export class HeadComponent implements AfterViewInit, OnDestroy {
 
   // FIXED: Use the service's method directly and let it handle the state
   chooseCustomFilterAirline(airline: any, index: number): void {
-    console.log('Choosing airline:', airline.name, 'at index:', index);
     this.flightResultService.chooseCustomFilterAirline(airline, index);
   }
 

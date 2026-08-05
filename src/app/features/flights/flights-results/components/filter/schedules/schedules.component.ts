@@ -71,11 +71,14 @@ export class SchedulesComponent implements OnInit {
       return;
     }
 
-    this.departCity = this.flights[this.isReturn ? 1 : 0].flightDTO[0].departureTerminalAirport.cityName;
-    this.arrivalCity =
-      this.flights[this.isReturn ? 1 : 0].flightDTO[
-        this.flights[this.isReturn ? 1 : 0].flightDTO.length - 1
-      ].arrivalTerminalAirport.cityName;
+    const flightIndex = this.isReturn ? 1 : 0;
+    const flight = this.flights[flightIndex];
+    if (!flight || !flight.flightDTO || !flight.flightDTO.length) {
+      return;
+    }
+
+    this.departCity = flight.flightDTO[0]?.departureTerminalAirport?.cityName || '';
+    this.arrivalCity = flight.flightDTO[flight.flightDTO.length - 1]?.arrivalTerminalAirport?.cityName || '';
   }
 
   onSelectOption(scheduleOption: IScheduleOption) {

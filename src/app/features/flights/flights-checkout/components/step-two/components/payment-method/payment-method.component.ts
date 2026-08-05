@@ -78,7 +78,6 @@ export class PaymentMethodComponent implements OnInit, OnDestroy {
       this.isPayLater = gateways.some((g) => g.GatewayType === 'PayLater');
       if (!this.selectedGatway) {
         const PaytabsIndex = gateways.findIndex((g) => g.PaymentMethod?.toLowerCase() === 'PaytabsCC'.toLowerCase());
-        console.log(PaytabsIndex);
         if (PaytabsIndex !== -1) {
           this.selectOption(PaytabsIndex, gateways[PaytabsIndex]);
         }
@@ -149,8 +148,6 @@ export class PaymentMethodComponent implements OnInit, OnDestroy {
     this.selectedGatway = gateway;
     this.selectedOption = index;
     this.sharedService.selectedGateway = gateway;
-    console.log(this.selectedGatway);
-
     if (gateway.GatewayType === 'MPGS') {
       if (this.selectedTicket === 'branded') {
         this.amount = this.brandedFare.amount;

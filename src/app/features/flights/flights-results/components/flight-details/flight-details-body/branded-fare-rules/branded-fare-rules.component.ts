@@ -16,9 +16,6 @@ export class BrandedFareRulesComponent implements OnInit {
   public sectors: string[] = [];
 
   ngOnInit(): void {
-    console.log(this.sharedService.selectedBrandedIndex);
-    console.log(this.sharedService.selectedFlightItinerary);
-
     this.sharedService.selectedFlightItinerary.allJourney.flights.forEach((flight, index) => {
       const departureAirportCode = flight.flightDTO[0].departureTerminalAirport.airportCode;
       const arrivalAirportCode = flight.flightDTO[flight.flightDTO.length - 1].arrivalTerminalAirport.airportCode;

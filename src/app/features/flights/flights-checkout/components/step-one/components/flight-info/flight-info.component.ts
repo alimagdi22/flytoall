@@ -36,8 +36,6 @@ export class FlightInfoComponent implements OnInit {
   hasStepTwo: boolean = false;
 
   ngOnInit() {
-    console.log(this.details , 'details');
-    
     this.route.queryParams.subscribe((params) => {
       const sid = params['sid'];
       const sequenceNum = params['sequenceNum'];

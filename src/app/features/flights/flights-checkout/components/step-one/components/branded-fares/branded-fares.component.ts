@@ -89,7 +89,6 @@ export class BrandedFaresComponent implements OnInit, OnDestroy {
   private subscribeToBrandedFaresNotifier(): void {
     this.brandedFareSubscription = this.flightResultService.brandedFareNotifier.subscribe({
       next: () => {
-        console.log('Branded fares notifier triggered - loading data');
         // Reload the branded fares data from session storage
         this.loadBrandedFaresData();
 
@@ -151,12 +150,10 @@ export class BrandedFaresComponent implements OnInit, OnDestroy {
     const data = sessionStorage.getItem(key);
     if (data) {
       this.selectedBrands = JSON.parse(data);
-      console.log('Loaded branded fares from session storage:', this.selectedBrands);
     } else {
       // Check if data is in the service's currentSelectedBrands
       if (this.flightResultService.currentSelectedBrands?.length > 0) {
         this.selectedBrands = this.flightResultService.currentSelectedBrands;
-        console.log('Loaded branded fares from service:', this.selectedBrands);
       }
     }
   }
@@ -191,7 +188,6 @@ export class BrandedFaresComponent implements OnInit, OnDestroy {
       currencyCode: this.selectedFlight?.airItineraryDTO?.itinTotalFare?.currencyCode,
       amount: this.selectedFlight?.airItineraryDTO?.itinTotalFare?.amount,
     };
-    console.log('Preparing fare details with brands:', this.selectedBrands);
 
     if (this.selectedBrands && Array.isArray(this.selectedBrands) && this.selectedBrands.length > 0) {
       const businessBrand = this.selectedBrands.find(
@@ -199,7 +195,6 @@ export class BrandedFaresComponent implements OnInit, OnDestroy {
           brand.itinTotalFare.amount > this.selectedBrands[0].itinTotalFare.amount && brand.isRefundable === true,
       );
       this.selectedBrand = businessBrand;
-      console.log(businessBrand, 'business brand found');
 
       if (businessBrand) {
         this.brandedFare = {
