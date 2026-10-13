@@ -4,56 +4,48 @@
       <div class="search-summary">
         <div class="route-info">
           <div class="cities">
-            {{
-              flightResultService.orgnizedResponce[0][0].allJourney.flights[0].flightDTO[0].departureTerminalAirport
-                .cityName
-            }},
-            {{
-              flightResultService.orgnizedResponce[0][0].allJourney.flights[0].flightDTO[0].departureTerminalAirport
-                .countryName
-            }}
-            -
-            {{
-              flightResultService.orgnizedResponce[0][0].allJourney.flights[0].flightDTO[
-                flightResultService.orgnizedResponce[0][0].allJourney.flights[0].flightDTO.length - 1
-              ].arrivalTerminalAirport.cityName
-            }},
-            {{
-              flightResultService.orgnizedResponce[0][0].allJourney.flights[0].flightDTO[
-                flightResultService.orgnizedResponce[0][0].allJourney.flights[0].flightDTO.length - 1
-              ].arrivalTerminalAirport.countryName
-            }}
+            @if (departureCityName) {
+              {{ departureCityName }}@if (departureCountryName) {, {{ departureCountryName }}}
+            }
+            @if (arrivalCityName) {
+              - {{ arrivalCityName }}@if (arrivalCountryName) {, {{ arrivalCountryName }}}
+            }
           </div>
           <div class="details">
-            <span
-              >{{ 'flight-result.cabin' | translate }} :
-              <span class="highlight">{{ flightResultService.orgnizedResponce[0][0].cabinClass }}</span></span
-            >
-            <span
-              >{{ 'flight-result.travelers' | translate }} :
-              <span class="highlight">{{ flightResultService.response?.searchCriteria?.totalPassengersNum }}</span></span
-            >
-            <span
-              >{{ 'flight-result.dates' | translate }} :
-              @if (flightResultService.response?.searchCriteria?.flights; as flights) {
-              <span class="highlight"
-                >{{
-                  flights[0].departingOnDate
-                    | date: 'EEEE, dd MMMM yyyy' : undefined : (translate.currentLang === 'ar' ? 'ar-EG' : 'en-US')
-                }}
-                -</span
+            @if (cabinClass) {
+              <span
+                >{{ 'flight-result.cabin' | translate }} :
+                <span class="highlight">{{ cabinClass }}</span></span
               >
-                <span class="highlight">{{
-                  flights[flights.length - 1].departingOnDate
-                    | date: 'EEEE, dd MMMM yyyy' : undefined : (translate.currentLang === 'ar' ? 'ar-EG' : 'en-US')
-                }}</span>
-              }
-              </span
-            >
+            }
+            @if (totalPassengers !== '') {
+              <span
+                >{{ 'flight-result.travelers' | translate }} :
+                <span class="highlight">{{ totalPassengers }}</span></span
+              >
+            }
+            @if (departingDate) {
+              <span
+                >{{ 'flight-result.dates' | translate }} :
+                <span class="highlight"
+                  >{{
+                    departingDate
+                      | date: 'EEEE, dd MMMM yyyy' : undefined : (translate.currentLang === 'ar' ? 'ar-EG' : 'en-US')
+                  }}</span
+                >
+                @if (returningDate && returningDate !== departingDate) {
+                  -
+                  <span class="highlight">{{
+                    returningDate
+                      | date: 'EEEE, dd MMMM yyyy' : undefined : (translate.currentLang === 'ar' ? 'ar-EG' : 'en-US')
+                  }}</span>
+                }
+              </span>
+            }
           </div>
         </div>
         <div class="modify-button">
-          <button (click)="toggleSearchBox()">{{ 'flight-result.modifySearch' | translate }}</button>
+          <button (click)="toggleSearchBox($event)">{{ 'flight-result.modifySearch' | translate }}</button>
         </div>
       </div>
     

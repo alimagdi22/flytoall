@@ -37,9 +37,37 @@
   </div>
 } @else {
   <!-- Mobile view remains the same but with fixed selection logic -->
-  @if (flightResultService.orgnizedResponce.length) {
-    <div class="search-summary" (click)="toggleSearchBox()" style="cursor: pointer">
-      <!-- ... existing mobile summary code ... -->
+  @if (flightResultService.response?.airItineraries?.length) {
+    <div class="search-summary" (click)="toggleSearchBox($event)" style="cursor: pointer">
+      <div class="route-info">
+        <div class="cities">
+          @if (departureCityName) {
+            {{ departureCityName }}@if (departureCountryName) {, {{ departureCountryName }}}
+          }
+          @if (arrivalCityName) {
+            - {{ arrivalCityName }}@if (arrivalCountryName) {, {{ arrivalCountryName }}}
+          }
+        </div>
+        <div class="details">
+          @if (cabinClass) {
+            <span>{{ 'flight-result.cabin' | translate }} : <span class="highlight">{{ cabinClass }}</span></span>
+          }
+          @if (totalPassengers !== '') {
+            <span>{{ 'flight-result.travelers' | translate }} : <span class="highlight">{{ totalPassengers }}</span></span>
+          }
+          @if (departingDate) {
+            <span>{{ 'flight-result.dates' | translate }} :
+              <span class="highlight">{{ departingDate | date: 'EEEE, dd MMMM yyyy' : undefined : (translate.currentLang === 'ar' ? 'ar-EG' : 'en-US') }}</span>
+              @if (returningDate && returningDate !== departingDate) {
+                - <span class="highlight">{{ returningDate | date: 'EEEE, dd MMMM yyyy' : undefined : (translate.currentLang === 'ar' ? 'ar-EG' : 'en-US') }}</span>
+              }
+            </span>
+          }
+        </div>
+      </div>
+      <div class="modify-button">
+        <button (click)="toggleSearchBox($event)">{{ 'flight-result.modifySearch' | translate }}</button>
+      </div>
     </div>
   }
 

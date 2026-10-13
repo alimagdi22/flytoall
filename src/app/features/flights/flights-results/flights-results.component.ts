@@ -70,6 +70,7 @@ export class FlightsResultsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription.add(
       this.route.params.subscribe((params: Params) => {
+        this.isSearchBoxOpen = false;
         if (this.isBrowser) {
           console.log(localStorage.getItem('form'), 'form');
         }
@@ -119,6 +120,7 @@ export class FlightsResultsComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.flightResultService.notify.subscribe({
         next: () => {
+          this.isSearchBoxOpen = false;
           if (!this.flightResultService.orgnizedResponce.length || !this.flightResultService.orgnizedResponce[0]?.length) {
             return;
           }
@@ -228,8 +230,79 @@ export class FlightsResultsComponent implements OnInit, OnDestroy {
     this.showFilterComponent = false;
   }
 
-  toggleSearchBox() {
+  toggleSearchBox(event?: MouseEvent) {
+    if (event) {
+      event.stopPropagation();
+    }
     this.isSearchBoxOpen = !this.isSearchBoxOpen;
+  }
+
+  get firstItinerary(): IAirItinerary | undefined {
+    return (
+      this.flightResultService.orgnizedResponce?.[0]?.[0] ||
+      this.flightResultService.response?.airItineraries?.[0]
+    );
+  }
+
+  get departureAirport() {
+    return this.firstItinerary?.allJourney?.flights?.[0]?.flightDTO?.[0]?.departureTerminalAirport;
+  }
+
+  get departureCityName(): string {
+    return this.departureAirport?.cityName || this.departureAirport?.airportName || '';
+  }
+
+  get departureCountryName(): string {
+    return this.departureAirport?.countryName || '';
+  }
+
+  get arrivalAirport() {
+    const flightDTOs = this.firstItinerary?.allJourney?.flights?.[0]?.flightDTO;
+    if (!flightDTOs || !flightDTOs.length) return undefined;
+    return flightDTOs[flightDTOs.length - 1]?.arrivalTerminalAirport;
+  }
+
+  get arrivalCityName(): string {
+    return this.arrivalAirport?.cityName || this.arrivalAirport?.airportName || '';
+  }
+
+  get arrivalCountryName(): string {
+    return this.arrivalAirport?.countryName || '';
+  }
+
+  get cabinClass(): string {
+    return (
+      this.firstItinerary?.cabinClass ||
+      (this.flightResultService.response?.searchCriteria as any)?.cabinClass ||
+      this.sharedService.searchParams?.['Cclass'] ||
+      ''
+    );
+  }
+
+  get totalPassengers(): number | string {
+    return (
+      this.flightResultService.response?.searchCriteria?.totalPassengersNum ?? ''
+    );
+  }
+
+  get departingDate(): string | Date | undefined {
+    const searchFlights = this.flightResultService.response?.searchCriteria?.flights;
+    if (searchFlights && searchFlights.length > 0 && searchFlights[0].departingOnDate) {
+      return searchFlights[0].departingOnDate;
+    }
+    return this.firstItinerary?.deptDate;
+  }
+
+  get returningDate(): string | Date | undefined {
+    const searchFlights = this.flightResultService.response?.searchCriteria?.flights;
+    if (searchFlights && searchFlights.length > 0) {
+      return searchFlights[searchFlights.length - 1].departingOnDate;
+    }
+    const flights = this.firstItinerary?.allJourney?.flights;
+    if (flights && flights.length > 1) {
+      return flights[1]?.flightDTO?.[0]?.departureDate;
+    }
+    return undefined;
   }
 
   ngOnDestroy(): void {
